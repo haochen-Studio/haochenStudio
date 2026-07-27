@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>昊宸工作室 - 官网</title>
+    <link rel="icon" href="ico.png" type="image/png">
+    <style>
+        /* 全局主题变量 默认深色 */
+        :root {
+            --bg: #0c0c14;
+            --text: #f5f5f7;
+            --card-bg: rgba(26, 26, 38, 0.65);
+            --card-border: rgba(255,255,255,0.08);
+            --shadow: 0 8px 32px rgba(0,0,0,0.35);
+            --shadow-light: 0 4px 16px rgba(115, 168, 255, 0.15);
+            --primary: #73a8ff;
+            --primary-gradient: linear-gradient(135deg,#4080ff,#73a8ff);
+            --btn-bg: linear-gradient(135deg,#2563eb,#4080ff);
+            --btn-text: #fff;
+            --warn-color: #ff4757;
+            --warn-gradient: linear-gradient(135deg,#ff3838,#ff4757);
+            --tips-gradient: linear-gradient(135deg,#ffc436,#ffdd70);
+            --glow: 0 0 16px rgba(115, 168, 255, 0.25);
+        }
+        [data-theme="light"] {
+            --bg: #f8f9fc;
+            --text: #0f0f1a;
+            --card-bg: rgba(255,255,255,0.72);
+            --card-border: rgba(0,0,0,0.06);
+            --shadow: 0 8px 30px rgba(0,0,0,0.12);
+            --shadow-light: 0 4px 16px rgba(37, 99, 235, 0.12);
+            --primary: #2563eb;
+            --primary-gradient: linear-gradient(135deg,#2563eb,#4080ff);
+            --btn-bg: linear-gradient(135deg,#2563eb,#3b82f6);
+            --glow: 0 0 16px rgba(37, 99, 235, 0.2);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            scroll-behavior: smooth;
+        }
+        body {
+            background: var(--bg) url('beijing.png') center center no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            color: var(--text);
+            transition: background-color 0.4s ease, color 0.4s ease;
+            line-height: 1.7;
+            animation: pageFadeIn 0.8s ease forwards;
+            overflow-x: hidden;
+        }
+        /* 滚动视差遮罩 */
+        body::before{
+            content:"";
+            position:fixed;
+            inset:0;
+            background: var(--bg);
+            opacity:0.82;
+            z-index:-1;
+            transform: translateZ(0);
+        }
+        @keyframes pageFadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* 页面滚动渐入动画 */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.7s cubic-bezier(0.2,0,0.2,1);
+        }
+        .fade-in.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        /* 返回顶部悬浮按钮 */
+        .back-top {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--btn-bg);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--card-border);
+            box-shadow: var(--shadow);
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 98;
+        }
+        .back-top.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .back-top:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--glow);
+        }
+        /* 弹窗通用样式 */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        .modal-box {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            padding: 36px;
+            border-radius: 18px;
+            max-width: 540px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transform: scale(0.9) translateY(10px);
+            opacity: 0;
+            animation: modalShow 0.3s ease forwards;
+        }
+        @keyframes modalShow {
+            to { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        .warn-modal .modal-box{
+            border-top:4px solid var(--warn-color);
+        }
+        .advise-modal .modal-box{
+            border-top:4px solid #ffc436;
+        }
+        .modal-box h2 {
+            margin-bottom: 16px;
+            font-size:24px;
+        }
+        .warn-modal h2{
+            color:var(--warn-color);
+        }
+        .advise-modal h2{
+            color:#ffc436;
+        }
+        .modal-box p {
+            margin-bottom: 22px;
+            font-size:15px;
+            line-height:1.8;
+        }
+        .btn {
+            padding: 11px 28px;
+            border-radius: 12px;
+            cursor: pointer;
+            border:none;
+            font-size:16px;
+            font-weight:500;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--glow);
+        }
+        .btn-danger{
+            background: var(--warn-gradient);
+            color: white;
+        }
+        .btn-primary{
+            background: var(--btn-bg);
+            color: var(--btn-text);
+        }
+        .btn-warning{
+            background: var(--tips-gradient);
+            color: #000;
+        }
+        .hide {
+            display: none !important;
+        }
+        /* 人机验证框 */
+        .captcha-box{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:22px;
+            border:1px solid var(--card-border);
+            border-radius:14px;
+            padding:24px;
+            margin:24px 0;
+            background:rgba(255,255,255,0.04);
+        }
+        .captcha-box input[type="checkbox"]{
+            width:32px;height:32px;
+            cursor:pointer;
+        }
+        /* 导航栏 滚动变化 */
+        header {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--card-border);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index:99;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+        header.scroll-shrink {
+            padding: 10px 0;
+            backdrop-filter: blur(16px);
+        }
+        .nav-wrap {
+            display: flex;
+            flex-wrap:wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap:14px;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            color: transparent;
+            transition: font-size 0.3s ease;
+        }
+        header.scroll-shrink .logo {
+            font-size: 20px;
+        }
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            margin: 0 12px;
+            font-size:15px;
+            transition: color 0.2s, transform 0.2s;
+            display: inline-block;
+        }
+        .nav-links a:hover {
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+        .theme-btn {
+            padding: 8px 14px;
+            border: 1px solid var(--card-border);
+            background: var(--card-bg);
+            backdrop-filter: blur(6px);
+            color: var(--text);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+        .theme-btn:hover {
+            background: rgba(255,255,255,0.08);
+            box-shadow: var(--shadow-light);
+        }
+        /* 通用板块 */
+        section {
+            margin: 80px 0;
+        }
+        h2 {
+            margin-bottom: 24px;
+            border-left:5px solid;
+            border-image: var(--primary-gradient) 1;
+            padding-left: 14px;
+            font-size:26px;
+            position: relative;
+        }
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            padding: 28px;
+            margin-bottom: 18px;
+            box-shadow: var(--shadow);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            overflow: hidden;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--glow);
+        }
+        /* 下载分类标签 */
+        .download-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 24px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+        }
+        .download-tabs::-webkit-scrollbar {
+            height: 4px;
+        }
+        .download-tabs::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+        .tab-btn {
+            padding: 8px 18px;
+            border-radius: 10px;
+            border: 1px solid var(--card-border);
+            background: transparent;
+            color: var(--text);
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+        .tab-btn.active {
+            background: var(--primary-gradient);
+            border-color: transparent;
+            color: #fff;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+            animation: blockFade 0.4s ease;
+        }
+        /* 下载列表 */
+        .download-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--card-border);
+            transition: all 0.2s;
+            border-radius:10px;
+            margin:4px 0;
+        }
+        .download-item:hover {
+            background: rgba(255,255,255,0.05);
+            transform: translateX(6px);
+        }
+        .download-item a {
+            color: var(--primary);
+            text-decoration:none;
+            font-weight:500;
+        }
+        /* 团队成员横向滑动轮播核心 */
+        .team-wrap {
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+        }
+        .team-slider {
+            display: flex;
+            gap: 20px;
+            padding: 10px 0;
+            cursor: grab;
+            transition: transform 0.1s linear;
+        }
+        .team-slider:active {
+            cursor: grabbing;
+        }
+        .team-card {
+            min-width: 260px;
+            flex-shrink: 0;
+            padding: 22px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .team-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--glow);
+        }
+        .team-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            margin: 0 auto 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: #fff;
+        }
+        .team-name {
+            font-size: 19px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .team-job {
+            color: var(--primary);
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .team-desc {
+            font-size: 14px;
+            opacity: 0.85;
+        }
+        /* 表单样式 */
+        .form-box {
+            max-width: 420px;
+            margin: 0 auto;
+        }
+        input {
+            width: 100%;
+            padding: 13px 16px;
+            margin: 10px 0;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--card-border);
+            color: var(--text);
+            border-radius: 12px;
+            transition:0.25s;
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+        }
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(64,128,255,0.2);
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 13px;
+            background: var(--btn-bg);
+            color: var(--btn-text);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-top: 12px;
+            font-size:16px;
+            font-weight:500;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+        }
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--glow);
+        }
+        /* 页面板块切换 */
+        .page-block {
+            display: none;
+        }
+        .page-block.active {
+            display: block;
+            animation: blockFade 0.4s ease;
+        }
+        @keyframes blockFade {
+            from { opacity:0; transform: translateY(10px); }
+            to { opacity:1; transform: translateY(0); }
+        }
+        /* 抖音按钮 */
+        .douyin-btn{
+            display:inline-block;
+            margin-top:18px;
+            padding:12px 26px;
+            background: linear-gradient(135deg,#000000,#222222);
+            color:#fff;
+            border-radius:12px;
+            text-decoration:none;
+            font-weight:500;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+        }
+        .douyin-btn:hover{
+            transform: translateY(-3px);
+            box-shadow: 0 8px 22px rgba(0,0,0,0.35);
+            background: linear-gradient(135deg,#080808,#333333);
+        }
+        footer {
+            text-align: center;
+            padding: 36px 0;
+            border-top: 1px solid var(--card-border);
+            margin-top: 120px;
+            background: var(--card-bg);
+            backdrop-filter: blur(8px);
+        }
+    </style>
+</head>
+<body data-theme="dark">
+    <!-- 返回顶部按钮 -->
+    <div class="back-top" id="backTop">↑</div>
+    <!-- 网站攻击警告弹窗 -->
+    <div class="modal warn-modal" id="warnModal">
+        <div class="modal-box">
+            <h2>⚠️ 安全警告</h2>
+            <p>近期工作室官网持续遭受不明黑客高频攻击，服务器访问不稳定，可能出现页面打不开、加载失败、链接失效等情况，若无法正常访问请稍后重试！</p>
+            <button class="btn btn-danger" onclick="closeWarn()">我已知晓，进入网站</button>
+        </div>
+    </div>
+    <!-- 人机验证弹窗 -->
+    <div class="modal hide" id="captchaModal">
+        <div class="modal-box">
+            <h2>人机身份验证</h2>
+            <p>为防止机器人恶意访问，请完成验证</p>
+            <div class="captcha-box">
+                <input type="checkbox" id="robotCheck">
+                <label for="robotCheck">I'm not a robot</label>
+                <div style="opacity:0.7;">reCAPTCHA</div>
+            </div>
+            <button class="btn btn-primary" id="verifyBtn">确认验证</button>
+        </div>
+    </div>
+    <!-- 劝导黑客弹窗 -->
+    <div class="modal hide advise-modal" id="adviseModal">
+        <div class="modal-box">
+            <h2>友好劝导</h2>
+            <p>我们注意到工作室官网长期遭受高频攻击，持续攻击只会造成双方资源损耗，并无实际意义。</p>
+            <p>如果你熟悉网络安全技术，我们诚挚邀请你加入工作室团队一同合作，完善网站安全防护、服务器资源维护。</p>
+            <p>有意向可发送邮件沟通：<strong>haochen-gongzuoshi@qq.com</strong></p>
+            <button class="btn btn-warning" id="enterPageBtn">了解，前往页面</button>
+        </div>
+    </div>
+    <!-- 导航栏 -->
+    <header id="mainHeader">
+        <div class="container nav-wrap">
+            <div class="logo">昊宸工作室</div>
+            <div class="nav-links">
+                <a href="#" onclick="switchPage('home')">首页</a>
+                <a href="#" onclick="switchPage('team')">团队成员</a>
+                <a href="#" onclick="switchPage('about')">工作室介绍</a>
+                <a href="javascript:openCaptcha('download')">资源下载</a>
+                <a href="javascript:openCaptcha('login')">登录/注册</a>
+                <a href="#" onclick="switchPage('contact')">联系招新</a>
+            </div>
+            <button class="theme-btn" id="themeToggle">切换浅色模式</button>
+        </div>
+    </header>
+    <main class="container">
+        <!-- 首页板块 -->
+        <section class="page-block active fade-in" id="home">
+            <h2>欢迎来到昊宸工作室官网</h2>
+            <div class="card">
+                <p>工作室专注优质的博主天团</p>
+                <p style="margin-top:10px;">提示：网站受黑客攻击影响，访问卡顿属于正常现象，多次刷新即可恢复。</p>
+                <a class="douyin-btn" target="_blank" href="https://v.douyin.com/Jinkeul0-w8/">打开抖音查看更多作品</a>
+            </div>
+        </section>
+        <!-- 团队成员滑动轮播板块（新增核心模块） -->
+        <section class="page-block fade-in" id="team">
+            <h2>工作室全体伙伴</h2>
+            <div class="card">
+                <p style="margin-bottom:20px;">滑动下方卡片查看全部成员，鼠标拖拽/滚轮横向滑动，团队持续扩招中，欢迎加入！</p>
+                <div class="team-wrap">
+                    <div class="team-slider" id="teamSlider">
+                        <!-- 成员卡片可自由新增 -->
+                        <div class="team-card">
+                            <div class="team-avatar">董</div>
+                            <div class="team-name">宋昊宸</div>
+                            <div class="team-job">工作室创始人</div>
+                            <div class="team-desc">负责原版系统整理、PE工具开发、网站维护</div>
+                        </div>
+                        <div class="team-card">
+                            <div class="team-avatar">文</div>
+                            <div class="team-name">文文说电脑</div>
+                            <div class="team-job">签订博主</div>
+                            <div class="team-desc">服务器维护、软件制作、视频制作</div>
+                        </div>
+                        <div class="team-card">
+                            <div class="team-avatar">招</div>
+                            <div class="team-name">虚位待你</div>
+                            <div class="team-job">待招募岗位</div>
+                            <div class="team-desc">网络安全、运维、资源整理均可投递邮箱</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- 工作室介绍板块 -->
+        <section class="page-block fade-in" id="about">
+            <h2>工作室介绍</h2>
+            <div class="card">
+                <h3>昊宸工作室 初心与业务</h3>
+                <p>工作室由多名电脑运维、系统封装、网络安全爱好者联合组建，长期面向装机爱好者、企业运维、计算机学习者提供纯净无修改原版操作系统、PE急救维护工具、服务器系统、国产操作系统全套资源。</p>
+                <p style="margin-top:10px;">团队持续更新全系列Windows、国产UOS、服务器镜像，专人定期巡检网盘链接，修复失效资源，同时搭建防护体系抵御网络攻击，保障网站稳定访问。</p>
+                <a class="douyin-btn" target="_blank" href="https://v.douyin.com/Jinkeul0-w8/">打开抖音查看更多装机教程</a>
+            </div>
+        </section>
+        <!-- 扩容下载专区（带分类滑动标签） -->
+        <section class="page-block fade-in" id="download">
+            <h2>全品类资源下载中心</h2>
+            <div class="card">
+                <div class="download-tabs">
+                    <button class="tab-btn active" data-tab="win">Windows全系统</button>
+                    <button class="tab-btn" data-tab="pe">PE维护工具箱</button>
+                    <button class="tab-btn" data-tab="server">服务器系统</button>
+                    <button class="tab-btn" data-tab="linux">国产&Linux</button>
+                </div>
+                <!-- Windows分类 -->
+                <div class="tab-content active" id="win">
+                    <div class="download-item"><span>Windows11 原版</span><a href="https://1860216073.share.123pan.cn/123pan/3ofLvd-Rnkyv" target="_blank">立即下载</a></div>
+                    <div class="download-item"><span>Windows10 原版</span><a href="https://1860216073.share.123pan.cn/123pan/3ofLvd-SBqyv" target="_blank">立即下载</a></div>
+                    <div class="download-item"><span>Windows8.1</span><a href="https://1860216073.share.123pan.cn/123pan/3ofLvd-7Kdyv" target="_blank">立即下载</a></div>
+                    <div class="download-item"><span>Windows7 旗舰版</span><a href="https://1860216073.share.123pan.cn/123pan/3ofLvd-ZqkVv" target="_blank">立即下载</a></div>
+                    <div class="download-item"><span>WindowsXP</span><a href="https://1860216073.share.123pan.cn/123pan/3ofLvd-7AYyv" target="_blank">立即下载</a></div>
+                    <div class="download-item"><span>Windows12 预览版</span><a href="https://1860216073.share.123pan.cn/123pan/3ofLvd-7aayv" target="_blank">立即下载</a></div>
+                    <div class="download-item"><span>Windows Vista</span><a href="https://1860216073.share.123pan.cn/123pan/3ofLvd-t93Vv" target="_blank">立即下载</a></div>
+                </div>
+                <!-- PE工具箱 -->
+                <div class="tab-content" id="pe">
+                    <div class="download-item"><span>WePE 64位纯净版</span><a href="https://1860216073.share.123pan.cn/123pan/3ofLvd-cqkVv" target="_blank">立即下载</a></div>
+                    <div class="download-item"><span>FirPE V2.1.1 维护盘</span><a href="https://1860216073.share.123pan.cn/123pan/3ofLvd-baayv" target="_blank">立即下载</a></div>
+                    <div class="download-item"><span>微PE精简装机版</span><a href="#" target="_blank">立即下载</a></div>
+                    <div class="download-item"><span>多功能维修PE工具包</span><a href="#" target="_blank">立即下载</a></div>
+                </div>
+                <!-- 服务器系统 -->
+                <div class="tab-content" id="server">
+                    <div class="download-item"><span>Windows Server 2019</span><a href="https://1860216073.share.123pan.cn/123pan/3ofLvd-XsZyv" target="_blank">立即下载</a></div>
+                    <div class="download-item"><span>Windows Server 2022</span><a href="#" target="_blank">立即下载</a></div>
+                    <div class="download-item"><span>Server 2016 企业版</span><a href="#" target="_blank">立即下载</a></div>
+                </div>
+                <!-- 国产Linux -->
+                <div class="tab-content" id="linux">
+                    <div class="download-item"><span>UOS 20 专业版</span><a href="https://1860216073.share.123pan.cn/123pan/3ofLvd-laayv" target="_blank">立即下载</a></div>
+                    <div class="download-item"><span>统信UOS家庭版</span><a href="#" target="_blank">立即下载</a></div>
+                    <div class="download-item"><span>银河麒麟桌面系统</span><a href="#" target="_blank">立即下载</a></div>
+                </div>
+            </div>
+        </section>
+        <!-- 登录注册板块 -->
+        <section class="page-block fade-in" id="login">
+            <h2>工作室会员登录 / 新用户注册</h2>
+            <div class="card form-box">
+                <h3>会员登录</h3>
+                <input type="text" placeholder="输入账号">
+                <input type="password" placeholder="输入密码">
+                <button class="submit-btn">登录</button>
+                <hr style="margin:24px 0;border-color:var(--card-border)">
+                <h3>注册工作室会员</h3>
+                <input type="text" placeholder="设置用户名">
+                <input type="password" placeholder="设置密码">
+                <input type="password" placeholder="确认密码">
+                <input type="email" placeholder="绑定邮箱">
+                <button class="submit-btn">注册加入</button>
+            </div>
+        </section>
+        <!-- 联系&招新板块 -->
+        <section class="page-block fade-in" id="contact">
+            <h2>联系我们 | 工作室招新</h2>
+            <div class="card">
+                <p>商务合作、资源链接失效报修、网络安全合作、工作室应聘投递统一邮箱：</p>
+                <p style="font-size:18px;color:var(--primary);margin:12px 0;font-weight:500;">haochen-gongzuoshi@qq.com</p>
+                <p>工作时间：每日 9:00-22:00，所有邮件24小时内回复</p>
+                <p style="margin-top:12px;">招新需求：系统封装、服务器运维、网络安全、视频剪辑、资源整理，零基础可带教！</p>
+                <a class="douyin-btn" target="_blank" href="https://v.douyin.com/Jinkeul0-w8/">抖音私信快速沟通</a>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>昊宸工作室官网 © 2026 | 所有系统资源仅供个人学习使用 | 团队持续扩招中</p>
+    </footer>
+    <script>
+        // 禁用右键、复制剪切
+        document.oncontextmenu = function(){ return false; }
+        document.oncopy = function(){ return false; }
+        document.oncut = function(){ return false; }
+        document.onselectstart = function(){ return false; }
+
+        let targetPage = "";
+        // 打开人机验证
+        function openCaptcha(pageName){
+            targetPage = pageName;
+            document.getElementById('captchaModal').classList.remove('hide');
+        }
+        // 验证按钮逻辑
+        document.getElementById('verifyBtn').addEventListener('click',()=>{
+            const checkBox = document.getElementById('robotCheck');
+            if(checkBox.checked){
+                document.getElementById('captchaModal').classList.add('hide');
+                document.getElementById('adviseModal').classList.remove('hide');
+            }else{
+                alert("请勾选【I'm not a robot】完成验证！");
+            }
+        })
+        // 劝导弹窗确认跳转页面
+        document.getElementById('enterPageBtn').addEventListener('click',()=>{
+            document.getElementById('adviseModal').classList.add('hide');
+            switchPage(targetPage);
+        })
+        // 页面板块切换
+        function switchPage(id) {
+            document.querySelectorAll('.page-block').forEach(block=>{
+                block.classList.remove('active');
+            })
+            document.getElementById(id).classList.add('active');
+            window.scrollTo({top:0,behavior:'smooth'});
+            setTimeout(initScrollEffects, 100);
+        }
+        // 明暗主题本地存储
+        const toggleBtn = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        let currentTheme = localStorage.getItem('siteTheme') || 'dark';
+        if(currentTheme === 'dark'){
+            html.setAttribute('data-theme','dark');
+            toggleBtn.innerText = '切换浅色模式';
+        }else{
+            html.setAttribute('data-theme','light');
+            toggleBtn.innerText = '切换深色模式';
+        }
+        toggleBtn.onclick = function(){
+            if(html.getAttribute('data-theme') === 'dark'){
+                html.setAttribute('data-theme','light');
+                localStorage.setItem('siteTheme','light');
+                this.innerText = '切换深色模式';
+            }else{
+                html.setAttribute('data-theme','dark');
+                localStorage.setItem('siteTheme','dark');
+                this.innerText = '切换浅色模式';
+            }
+        }
+
+        // ========== 新增交互1：滚动监听（导航缩小、返回顶部、元素渐入）==========
+        const headerDom = document.getElementById('mainHeader');
+        const backTopBtn = document.getElementById('backTop');
+        const fadeElements = document.querySelectorAll('.fade-in');
+        window.addEventListener('scroll', ()=>{
+            const scrollY = window.scrollY;
+            // 导航栏滚动收缩
+            if(scrollY > 80){
+                headerDom.classList.add('scroll-shrink');
+                backTopBtn.classList.add('show');
+            }else{
+                headerDom.classList.remove('scroll-shrink');
+                backTopBtn.classList.remove('show');
+            }
+            // 滚动渐入动画
+            fadeElements.forEach(el=>{
+                const rect = el.getBoundingClientRect();
+                const trigger = window.innerHeight * 0.82;
+                if(rect.top < trigger) el.classList.add('show');
+            })
+        })
+        // 页面加载时立即执行一次滚动效果，确保初始内容可见
+        function initScrollEffects() {
+            const scrollY = window.scrollY;
+            if(scrollY > 80){
+                headerDom.classList.add('scroll-shrink');
+                backTopBtn.classList.add('show');
+            }
+            fadeElements.forEach(el=>{
+                const rect = el.getBoundingClientRect();
+                const trigger = window.innerHeight * 0.82;
+                if(rect.top < trigger) el.classList.add('show');
+            })
+        }
+        // 页面加载完成后初始化（直接调用，因为脚本在body末尾时DOMContentLoaded可能已触发）
+        initScrollEffects();
+        // 关闭警告弹窗后也触发一次，确保内容显示
+        function closeWarn() {
+            document.getElementById('warnModal').classList.add('hide');
+            setTimeout(initScrollEffects, 100);
+        }
+        // 返回顶部点击
+        backTopBtn.addEventListener('click',()=>{
+            window.scrollTo({top:0,behavior:'smooth'});
+        })
+
+        // ========== 新增交互2：下载分类标签切换 ==========
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        tabBtns.forEach(btn=>{
+            btn.addEventListener('click',()=>{
+                const tabId = btn.dataset.tab;
+                // 切换按钮激活
+                tabBtns.forEach(b=>b.classList.remove('active'));
+                btn.classList.add('active');
+                // 切换内容
+                tabContents.forEach(c=>c.classList.remove('active'));
+                document.getElementById(tabId).classList.add('active');
+            })
+        })
+
+        // ========== 新增交互3：团队成员横向拖拽滑动轮播（无BUG）==========
+        const slider = document.getElementById('teamSlider');
+        let isDrag = false;
+        let startX = 0;
+        let scrollLeft = 0;
+        // 鼠标按下
+        slider.addEventListener('mousedown',(e)=>{
+            isDrag = true;
+            startX = e.pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+            slider.style.transition = 'none';
+        })
+        // 鼠标移动拖拽
+        slider.addEventListener('mousemove',(e)=>{
+            if(!isDrag) return;
+            e.preventDefault();
+            const x = e.pageX - slider.offsetLeft;
+            const walk = (x - startX) * 1.2;
+            slider.scrollLeft = scrollLeft - walk;
+        })
+        // 鼠标松开/离开
+        window.addEventListener('mouseup',()=>{
+            isDrag = false;
+            slider.style.transition = 'transform 0.1s linear';
+        })
+        window.addEventListener('mouseleave',()=>{
+            isDrag = false;
+            slider.style.transition = 'transform 0.1s linear';
+        })
+        // 鼠标滚轮横向滑动
+        slider.addEventListener('wheel',(e)=>{
+            e.preventDefault();
+            slider.scrollLeft += e.deltaY * 1.2;
+        },{passive:false})
+    </script>
+</body>
+</html>
