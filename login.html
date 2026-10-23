@@ -1,0 +1,915 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        height: 100vh;
+        overflow: hidden;
+        background: #fff;
+        color: #111;
+      }
+      .page {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        height: 100vh;
+      }
+      .left {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 48px;
+        background: linear-gradient(135deg, #9ca3af, #6b7280, #4b5563);
+        color: #fff;
+        overflow: hidden;
+      }
+      .blob1,
+      .blob2 {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(60px);
+        pointer-events: none;
+      }
+      .blob1 {
+        top: 25%;
+        right: 25%;
+        width: 256px;
+        height: 256px;
+        background: rgba(156, 163, 175, 0.2);
+      }
+      .blob2 {
+        bottom: 25%;
+        left: 25%;
+        width: 384px;
+        height: 384px;
+        background: rgba(209, 213, 219, 0.2);
+      }
+      .grid-overlay {
+        position: absolute;
+        inset: 0;
+        background-image:
+          repeating-linear-gradient(
+            0deg,
+            rgba(255, 255, 255, 0.05) 0 1px,
+            transparent 1px 20px
+          ),
+          repeating-linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.05) 0 1px,
+            transparent 1px 20px
+          );
+        pointer-events: none;
+      }
+      .characters-wrap {
+        position: relative;
+        z-index: 20;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        height: 500px;
+      }
+      .characters {
+        position: relative;
+        width: 550px;
+        height: 400px;
+      }
+      .char {
+        position: absolute;
+        bottom: 0;
+        transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        transform-origin: bottom center;
+      }
+      .char-purple {
+        left: 70px;
+        width: 180px;
+        height: 400px;
+        background: #6c3ff5;
+        border-radius: 10px 10px 0 0;
+        z-index: 1;
+      }
+      .char-purple .eyes-wrap {
+        position: absolute;
+        display: flex;
+        gap: 32px;
+        transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .char-black {
+        left: 240px;
+        width: 120px;
+        height: 310px;
+        background: #2d2d2d;
+        border-radius: 8px 8px 0 0;
+        z-index: 2;
+      }
+      .char-black .eyes-wrap {
+        position: absolute;
+        display: flex;
+        gap: 24px;
+        transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .char-orange {
+        left: 0;
+        width: 240px;
+        height: 200px;
+        background: #ff9b6b;
+        border-radius: 120px 120px 0 0;
+        z-index: 3;
+      }
+      .char-orange .eyes-wrap {
+        position: absolute;
+        display: flex;
+        gap: 32px;
+        transition: all 0.2s ease-out;
+      }
+      .char-yellow {
+        left: 310px;
+        width: 140px;
+        height: 230px;
+        background: #e8d754;
+        border-radius: 70px 70px 0 0;
+        z-index: 4;
+      }
+      .char-yellow .eyes-wrap {
+        position: absolute;
+        display: flex;
+        gap: 24px;
+        transition: all 0.2s ease-out;
+      }
+      .char-yellow .mouth {
+        position: absolute;
+        width: 80px;
+        height: 4px;
+        background: #2d2d2d;
+        border-radius: 4px;
+        transition: all 0.2s ease-out;
+      }
+      .eyeball {
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        transition: height 0.15s;
+        background: #fff;
+      }
+      .eyeball .pupil {
+        border-radius: 50%;
+        background: #2d2d2d;
+        transition: transform 0.1s ease-out;
+      }
+      .pupil-only {
+        border-radius: 50%;
+        background: #2d2d2d;
+        transition: transform 0.1s ease-out;
+      }
+      .right {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 32px;
+        background: #fff;
+      }
+      .form-box {
+        width: 100%;
+        max-width: 420px;
+      }
+      .form-box .header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+      .form-box .header h1 {
+        font-size: 30px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        margin-bottom: 8px;
+      }
+      .form-box .header p {
+        color: #6b7280;
+        font-size: 14px;
+      }
+      .field {
+        margin-bottom: 20px;
+      }
+      .field label {
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 6px;
+      }
+      .field input {
+        width: 100%;
+        height: 48px;
+        padding: 0 16px;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 15px;
+        outline: none;
+        transition: border-color 0.2s;
+        background: #fff;
+      }
+      .field input:focus {
+        border-color: #111;
+      }
+      .captcha-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .captcha-box {
+        width: 120px;
+        height: 44px;
+        flex-shrink: 0;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        overflow: hidden;
+        cursor: pointer;
+        background: #f5f7fa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        color: #9ca3af;
+      }
+      .captcha-box img,
+      .captcha-box svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      .captcha-row input {
+        width: auto;
+        flex: 1;
+        min-width: 0;
+        text-transform: uppercase;
+      }
+      .captcha-hint {
+        margin-top: 6px;
+        font-size: 12px;
+        color: #9ca3af;
+      }
+      .field .input-wrap {
+        position: relative;
+      }
+      .field .input-wrap input {
+        padding-right: 44px;
+      }
+      .toggle-pw {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 2;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #9ca3af;
+        transition: color 0.2s;
+        padding: 4px;
+      }
+      .toggle-pw:hover {
+        color: #111;
+      }
+      .toggle-pw svg {
+        width: 20px;
+        height: 20px;
+        pointer-events: none;
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+      .row .remember {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+      .row .remember input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        accent-color: #111;
+        cursor: pointer;
+      }
+      .row a {
+        font-size: 14px;
+        font-weight: 500;
+        color: #111;
+        text-decoration: none;
+      }
+      .row a:hover {
+        text-decoration: underline;
+      }
+      .hover-btn {
+        position: relative;
+        width: 100%;
+        height: 48px;
+        border-radius: 9999px;
+        border: 1px solid #e5e7eb;
+        background: #fff;
+        cursor: pointer;
+        overflow: hidden;
+        font-size: 16px;
+        font-weight: 600;
+        color: #111;
+      }
+      .hover-btn .label {
+        display: inline-block;
+        transition: all 0.3s;
+      }
+      .hover-btn .overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        background: #111;
+        color: #fff;
+        border-radius: 9999px;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .hover-btn:hover .label {
+        transform: translateX(48px);
+        opacity: 0;
+      }
+      .hover-btn:hover .overlay {
+        opacity: 1;
+      }
+      .divider {
+        text-align: center;
+        margin-top: 32px;
+        font-size: 14px;
+        color: #6b7280;
+      }
+      .divider a {
+        color: #111;
+        font-weight: 500;
+        text-decoration: none;
+      }
+      .divider a:hover {
+        text-decoration: underline;
+      }
+      .form-error {
+        display: none;
+        margin: -12px 0 20px;
+        padding: 10px 14px;
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        color: #dc2626;
+        font-size: 13px;
+        border-radius: 8px;
+      }
+      .form-error.show {
+        display: block;
+      }
+      .arrow-icon {
+        width: 16px;
+        height: 16px;
+      }
+      @media (max-width: 1024px) {
+        body {
+          height: auto;
+          overflow: auto;
+        }
+        .page {
+          grid-template-columns: 1fr;
+          height: auto;
+          min-height: 100vh;
+        }
+        .left {
+          padding: 24px 16px 0;
+        }
+        .characters-wrap {
+          height: 220px;
+        }
+        .characters {
+          transform: scale(0.45);
+          transform-origin: bottom center;
+        }
+        .right {
+          padding: 24px 20px 40px;
+        }
+        .form-box .header {
+          margin-bottom: 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="left">
+        <div class="characters-wrap">
+          <div class="characters" id="characters">
+            <div class="char char-purple" id="purple">
+              <div class="eyes-wrap" id="purple-eyes">
+                <div
+                  class="eyeball"
+                  id="purple-eye-l"
+                  style="width: 18px; height: 18px"
+                >
+                  <div class="pupil" style="width: 7px; height: 7px"></div>
+                </div>
+                <div
+                  class="eyeball"
+                  id="purple-eye-r"
+                  style="width: 18px; height: 18px"
+                >
+                  <div class="pupil" style="width: 7px; height: 7px"></div>
+                </div>
+              </div>
+            </div>
+            <div class="char char-black" id="black">
+              <div class="eyes-wrap" id="black-eyes">
+                <div
+                  class="eyeball"
+                  id="black-eye-l"
+                  style="width: 16px; height: 16px"
+                >
+                  <div class="pupil" style="width: 6px; height: 6px"></div>
+                </div>
+                <div
+                  class="eyeball"
+                  id="black-eye-r"
+                  style="width: 16px; height: 16px"
+                >
+                  <div class="pupil" style="width: 6px; height: 6px"></div>
+                </div>
+              </div>
+            </div>
+            <div class="char char-orange" id="orange">
+              <div class="eyes-wrap" id="orange-eyes">
+                <div class="pupil-only" style="width: 12px; height: 12px"></div>
+                <div class="pupil-only" style="width: 12px; height: 12px"></div>
+              </div>
+            </div>
+            <div class="char char-yellow" id="yellow">
+              <div class="eyes-wrap" id="yellow-eyes">
+                <div class="pupil-only" style="width: 12px; height: 12px"></div>
+                <div class="pupil-only" style="width: 12px; height: 12px"></div>
+              </div>
+              <div class="mouth" id="yellow-mouth"></div>
+            </div>
+          </div>
+        </div>
+        <div class="grid-overlay"></div>
+        <div class="blob1"></div>
+        <div class="blob2"></div>
+      </div>
+      <div class="right">
+        <div class="form-box">
+          <div class="header">
+            <h1>欢迎回来！</h1>
+            <p>请输入你的登录信息</p>
+          </div>
+          <div class="form-error" id="loginError"></div>
+          <form id="loginForm" onsubmit="return false;">
+            <div class="field">
+              <label for="email">邮箱</label
+              ><input
+                id="email"
+                type="email"
+                placeholder="you@example.com"
+                autocomplete="off"
+              />
+            </div>
+            <div class="field">
+              <label for="password">密码</label>
+              <div class="input-wrap">
+                <input
+                  id="password"
+                  type="password"
+                  placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
+                /><button
+                  type="button"
+                  class="toggle-pw"
+                  id="togglePw"
+                  aria-label="Toggle password visibility"
+                >
+                  <svg
+                    id="eyeIcon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
+                    />
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                    /></svg
+                  ><svg
+                    id="eyeOffIcon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    style="display: none"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12c1.292 4.338 5.31 7.5 10.066 7.5.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="field">
+              <label for="captcha">人机验证</label>
+              <div class="captcha-row">
+                <div class="captcha-box" id="captchaBox" title="点击刷新">加载中…</div>
+                <input
+                  id="captcha"
+                  type="text"
+                  maxlength="4"
+                  placeholder="输入图中字符"
+                  autocomplete="off"
+                />
+              </div>
+              <div class="captcha-hint">看不清？点击图片换一张</div>
+            </div>
+            <div class="row">
+              <label class="remember"
+                ><input type="checkbox" />30天内记住我</label
+              ><a href="#">忘记密码？</a>
+            </div>
+            <button type="submit" class="hover-btn">
+              <span class="label">登 录</span>
+              <div class="overlay">
+                <span>登 录</span
+                ><svg
+                  class="arrow-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="2"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                  />
+                </svg>
+              </div>
+            </button>
+          </form>
+          <div class="divider">还没有账号？<a href="register.html">立即注册</a> · <a href="index.html">返回首页</a></div>
+        </div>
+      </div>
+    </div>
+    <script>
+      let mouseX = 0,
+        mouseY = 0;
+      let isTyping = false;
+      let showPassword = false;
+      let passwordLen = 0;
+      let purpleBlink = false,
+        blackBlink = false;
+      let lookingAtEachOther = false;
+      let purplePeeking = false;
+      const $purple = document.getElementById("purple");
+      const $black = document.getElementById("black");
+      const $orange = document.getElementById("orange");
+      const $yellow = document.getElementById("yellow");
+      const $purpleEyes = document.getElementById("purple-eyes");
+      const $blackEyes = document.getElementById("black-eyes");
+      const $orangeEyes = document.getElementById("orange-eyes");
+      const $yellowEyes = document.getElementById("yellow-eyes");
+      const $yellowMouth = document.getElementById("yellow-mouth");
+      const $emailInput = document.getElementById("email");
+      const $passwordInput = document.getElementById("password");
+      const $togglePw = document.getElementById("togglePw");
+      const $eyeIcon = document.getElementById("eyeIcon");
+      const $eyeOffIcon = document.getElementById("eyeOffIcon");
+      document.addEventListener("mousemove", (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+      $emailInput.addEventListener("focus", () => {
+        isTyping = true;
+        triggerLookAtEachOther();
+      });
+      $emailInput.addEventListener("blur", () => {
+        isTyping = false;
+        lookingAtEachOther = false;
+      });
+      $passwordInput.addEventListener("input", () => {
+        passwordLen = $passwordInput.value.length;
+      });
+      $passwordInput.addEventListener("focus", () => {
+        isTyping = true;
+        triggerLookAtEachOther();
+      });
+      $passwordInput.addEventListener("blur", () => {
+        isTyping = false;
+        lookingAtEachOther = false;
+      });
+      $togglePw.addEventListener("click", () => {
+        showPassword = !showPassword;
+        $passwordInput.type = showPassword ? "text" : "password";
+        $eyeIcon.style.display = showPassword ? "none" : "";
+        $eyeOffIcon.style.display = showPassword ? "" : "none";
+      });
+      function triggerLookAtEachOther() {
+        lookingAtEachOther = true;
+        setTimeout(() => {
+          lookingAtEachOther = false;
+        }, 800);
+      }
+      function scheduleBlink(setter) {
+        const delay = Math.random() * 4000 + 3000;
+        setTimeout(() => {
+          setter(true);
+          setTimeout(() => {
+            setter(false);
+            scheduleBlink(setter);
+          }, 150);
+        }, delay);
+      }
+      scheduleBlink((v) => {
+        purpleBlink = v;
+      });
+      scheduleBlink((v) => {
+        blackBlink = v;
+      });
+      function schedulePeek() {
+        if (passwordLen > 0 && showPassword) {
+          const delay = Math.random() * 3000 + 2000;
+          setTimeout(() => {
+            if (passwordLen > 0 && showPassword) {
+              purplePeeking = true;
+              setTimeout(() => {
+                purplePeeking = false;
+                schedulePeek();
+              }, 800);
+            }
+          }, delay);
+        }
+      }
+      const peekInterval = setInterval(() => {
+        if (passwordLen > 0 && showPassword && !purplePeeking) schedulePeek();
+      }, 1000);
+      function calcPos(el) {
+        const rect = el.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 3;
+        const dx = mouseX - cx;
+        const dy = mouseY - cy;
+        return {
+          faceX: Math.max(-15, Math.min(15, dx / 20)),
+          faceY: Math.max(-10, Math.min(10, dy / 30)),
+          bodySkew: Math.max(-6, Math.min(6, -dx / 120)),
+        };
+      }
+      function eyePupilOffset(el, maxDist, forceX, forceY) {
+        if (forceX !== undefined && forceY !== undefined)
+          return { x: forceX, y: forceY };
+        const rect = el.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = mouseX - cx;
+        const dy = mouseY - cy;
+        const dist = Math.min(Math.sqrt(dx * dx + dy * dy), maxDist);
+        const angle = Math.atan2(dy, dx);
+        return { x: Math.cos(angle) * dist, y: Math.sin(angle) * dist };
+      }
+      function render() {
+        const pp = calcPos($purple);
+        const bp = calcPos($black);
+        const op = calcPos($orange);
+        const yp = calcPos($yellow);
+        const isHiding = passwordLen > 0 && !showPassword;
+        const isShowingPw = passwordLen > 0 && showPassword;
+        if (isShowingPw) {
+          $purple.style.transform = "skewX(0deg)";
+          $purple.style.height = "400px";
+        } else if (isTyping || isHiding) {
+          $purple.style.transform = `skewX(${(pp.bodySkew || 0) - 12}deg) translateX(40px)`;
+          $purple.style.height = "440px";
+        } else {
+          $purple.style.transform = `skewX(${pp.bodySkew || 0}deg)`;
+          $purple.style.height = "400px";
+        }
+        const purpleEyeL = $purpleEyes.children[0];
+        const purpleEyeR = $purpleEyes.children[1];
+        purpleEyeL.style.height = purpleBlink ? "2px" : "18px";
+        purpleEyeR.style.height = purpleBlink ? "2px" : "18px";
+        let pfx, pfy;
+        if (isShowingPw) {
+          $purpleEyes.style.left = "20px";
+          $purpleEyes.style.top = "35px";
+          pfx = purplePeeking ? 4 : -4;
+          pfy = purplePeeking ? 5 : -4;
+        } else if (lookingAtEachOther) {
+          $purpleEyes.style.left = "55px";
+          $purpleEyes.style.top = "65px";
+          pfx = 3;
+          pfy = 4;
+        } else {
+          $purpleEyes.style.left = 45 + pp.faceX + "px";
+          $purpleEyes.style.top = 40 + pp.faceY + "px";
+          pfx = undefined;
+          pfy = undefined;
+        }
+        setPupil(purpleEyeL, 5, pfx, pfy);
+        setPupil(purpleEyeR, 5, pfx, pfy);
+        if (isShowingPw) {
+          $black.style.transform = "skewX(0deg)";
+        } else if (lookingAtEachOther) {
+          $black.style.transform = `skewX(${(bp.bodySkew || 0) * 1.5 + 10}deg) translateX(20px)`;
+        } else if (isTyping || isHiding) {
+          $black.style.transform = `skewX(${(bp.bodySkew || 0) * 1.5}deg)`;
+        } else {
+          $black.style.transform = `skewX(${bp.bodySkew || 0}deg)`;
+        }
+        const blackEyeL = $blackEyes.children[0];
+        const blackEyeR = $blackEyes.children[1];
+        blackEyeL.style.height = blackBlink ? "2px" : "16px";
+        blackEyeR.style.height = blackBlink ? "2px" : "16px";
+        let bfx, bfy;
+        if (isShowingPw) {
+          $blackEyes.style.left = "10px";
+          $blackEyes.style.top = "28px";
+          bfx = -4;
+          bfy = -4;
+        } else if (lookingAtEachOther) {
+          $blackEyes.style.left = "32px";
+          $blackEyes.style.top = "12px";
+          bfx = 0;
+          bfy = -4;
+        } else {
+          $blackEyes.style.left = 26 + bp.faceX + "px";
+          $blackEyes.style.top = 32 + bp.faceY + "px";
+          bfx = undefined;
+          bfy = undefined;
+        }
+        setPupil(blackEyeL, 4, bfx, bfy);
+        setPupil(blackEyeR, 4, bfx, bfy);
+        $orange.style.transform = isShowingPw
+          ? "skewX(0deg)"
+          : `skewX(${op.bodySkew || 0}deg)`;
+        let ofx, ofy;
+        if (isShowingPw) {
+          $orangeEyes.style.left = "50px";
+          $orangeEyes.style.top = "85px";
+          ofx = -5;
+          ofy = -4;
+        } else {
+          $orangeEyes.style.left = 82 + (op.faceX || 0) + "px";
+          $orangeEyes.style.top = 90 + (op.faceY || 0) + "px";
+          ofx = undefined;
+          ofy = undefined;
+        }
+        setPupilOnly($orangeEyes.children[0], 5, ofx, ofy);
+        setPupilOnly($orangeEyes.children[1], 5, ofx, ofy);
+        $yellow.style.transform = isShowingPw
+          ? "skewX(0deg)"
+          : `skewX(${yp.bodySkew || 0}deg)`;
+        let yfx, yfy;
+        if (isShowingPw) {
+          $yellowEyes.style.left = "20px";
+          $yellowEyes.style.top = "35px";
+          $yellowMouth.style.left = "10px";
+          $yellowMouth.style.top = "88px";
+          yfx = -5;
+          yfy = -4;
+        } else {
+          $yellowEyes.style.left = 52 + (yp.faceX || 0) + "px";
+          $yellowEyes.style.top = 40 + (yp.faceY || 0) + "px";
+          $yellowMouth.style.left = 40 + (yp.faceX || 0) + "px";
+          $yellowMouth.style.top = 88 + (yp.faceY || 0) + "px";
+          yfx = undefined;
+          yfy = undefined;
+        }
+        setPupilOnly($yellowEyes.children[0], 5, yfx, yfy);
+        setPupilOnly($yellowEyes.children[1], 5, yfx, yfy);
+        requestAnimationFrame(render);
+      }
+      function setPupil(eyeEl, maxDist, forceX, forceY) {
+        const pupil = eyeEl.querySelector(".pupil");
+        if (!pupil) return;
+        const o = eyePupilOffset(eyeEl, maxDist, forceX, forceY);
+        pupil.style.transform = `translate(${o.x}px, ${o.y}px)`;
+      }
+      function setPupilOnly(el, maxDist, forceX, forceY) {
+        const o = eyePupilOffset(el, maxDist, forceX, forceY);
+        el.style.transform = `translate(${o.x}px, ${o.y}px)`;
+      }
+      requestAnimationFrame(render);
+
+      // ===== 登录逻辑 =====
+      const $loginForm = document.getElementById("loginForm");
+      const $loginError = document.getElementById("loginError");
+      const $rememberBox = $loginForm.querySelector('input[type="checkbox"]');
+      function showLoginError(msg) {
+        $loginError.textContent = msg;
+        $loginError.classList.add("show");
+      }
+      function clearLoginError() {
+        $loginError.classList.remove("show");
+      }
+      $emailInput.addEventListener("input", clearLoginError);
+      $passwordInput.addEventListener("input", clearLoginError);
+
+      // ===== 人机验证 =====
+      const $captchaBox = document.getElementById("captchaBox");
+      const $captchaInput = document.getElementById("captcha");
+      let captchaToken = "";
+      function loadCaptcha() {
+        $captchaBox.textContent = "加载中…";
+        captchaToken = "";
+        fetch("api.php?action=captcha")
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.image) {
+              $captchaBox.innerHTML =
+                '<img src="' + data.image + '" alt="验证码">';
+            } else if (data.svg) {
+              $captchaBox.innerHTML = data.svg;
+            }
+            captchaToken = data.token || "";
+          })
+          .catch(() => {
+            $captchaBox.textContent = "点击重试";
+          });
+      }
+      $captchaBox.addEventListener("click", loadCaptcha);
+      $captchaInput.addEventListener("input", clearLoginError);
+      loadCaptcha();
+
+      $loginForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const email = $emailInput.value.trim();
+        const password = $passwordInput.value;
+        if (!email || !password) {
+          showLoginError("请输入邮箱和密码");
+          return;
+        }
+        if (!captchaToken) {
+          showLoginError("验证码加载中，请稍候或点击图片刷新");
+          return;
+        }
+        if (!$captchaInput.value.trim()) {
+          showLoginError("请输入图形验证码");
+          return;
+        }
+        fetch("api.php?action=login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+            remember: $rememberBox.checked,
+            captcha_token: captchaToken,
+            captcha_answer: $captchaInput.value.trim(),
+          }),
+        })
+          .then(async (res) => {
+            const data = await res.json().catch(() => ({}));
+            if (res.ok) {
+              location.href = "/";
+            } else {
+              showLoginError(data.error || "登录失败，请重试");
+              $captchaInput.value = "";
+              loadCaptcha();
+            }
+          })
+          .catch(() => {
+            showLoginError("网络错误，请稍后重试");
+            loadCaptcha();
+          });
+      });
+      // 忘记密码
+      document.querySelector(".row a").addEventListener("click", (e) => {
+        e.preventDefault();
+        alert("请联系管理员重置密码：contact@haochen.studio");
+      });
+    </script>
+  </body>
+</html>

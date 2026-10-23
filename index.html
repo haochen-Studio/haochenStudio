@@ -1,0 +1,1878 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>昊宸工作室官方网站-首页</title>
+<link rel="icon" type="image/png" href="img/ico.png">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+    background: #f5f7fa;
+    color: #333;
+    min-width: 1100px;
+  }
+  a { text-decoration: none; color: inherit; }
+  ul, li { list-style: none; }
+  .container { width: 1000px; margin: 0 auto; }
+
+  /* ============ 顶部 ============ */
+  .site-header {
+    background:
+      linear-gradient(180deg, rgba(243,249,255,.92) 0%, rgba(226,240,253,.55) 100%),
+      url("https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=light%20blue%20sky%20with%20white%20silhouette%20of%20modern%20city%20skyline%20at%20the%20bottom%2C%20minimal%20clean%20corporate%20website%20header%20background%2C%20soft%20pale%20blue%20gradient%2C%20no%20text&image_size=landscape_16_9") center bottom / cover no-repeat;
+  }
+  .header-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 92px;
+  }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand-text h1 {
+    font-size: 27px; color: #1a5cb0; letter-spacing: 2px; font-weight: 700;
+  }
+  .brand-text p {
+    font-size: 11px; color: #4a7fbe; letter-spacing: .5px; margin-top: 4px;
+  }
+  .search-box { display: flex; }
+  .search-box input {
+    width: 200px; height: 36px; border: 1px solid #bcd2ec; border-right: none;
+    background: #fff; padding: 0 12px; font-size: 13px; outline: none; color: #555;
+  }
+  .search-box input::placeholder { color: #a9bdd8; }
+  .search-box button {
+    width: 68px; height: 36px; border: none; cursor: pointer;
+    background: linear-gradient(180deg, #3a7bd0, #1e5cb0);
+    color: #fff; font-size: 14px; letter-spacing: 2px;
+  }
+  .search-box button:hover { background: linear-gradient(180deg,#2f6fbe,#1a529e); }
+  .header-right { display: flex; align-items: center; gap: 18px; }
+  .auth-area { display: flex; align-items: center; gap: 10px; }
+  .auth-btn {
+    display: inline-block; padding: 8px 18px; font-size: 13px; line-height: 1;
+    border: 1px solid #bcd2ec; color: #2563b8; border-radius: 3px;
+    transition: all .2s;
+  }
+  .auth-btn:hover { background: #f4f9ff; }
+  .auth-btn.primary { background: linear-gradient(180deg,#3a7bd0,#1e5cb0); color: #fff; border-color: transparent; }
+  .auth-btn.primary:hover { background: linear-gradient(180deg,#2f6fbe,#1a529e); }
+  .auth-user { font-size: 14px; color: #1a5cb0; }
+  .auth-user b { font-weight: 700; }
+  .auth-logout { font-size: 13px; color: #8a97a8; cursor: pointer; text-decoration: none; }
+  .auth-logout:hover { color: #d0342c; }
+
+  /* ============ 导航 ============ */
+  .main-nav {
+    background: linear-gradient(180deg, #2f74ce, #1c56a8);
+    box-shadow: 0 2px 6px rgba(20,60,120,.25);
+    position: relative; z-index: 5;
+  }
+  .main-nav ul { display: flex; }
+  .main-nav li { flex: 1; text-align: center; position: relative; }
+  .main-nav a {
+    display: block; color: #fff; font-size: 16px; letter-spacing: 1px;
+    padding: 15px 0; transition: background .2s;
+  }
+  .main-nav li + li::before {
+    content: ""; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+    width: 1px; height: 18px; background: rgba(255,255,255,.25);
+  }
+  .main-nav li:hover a, .main-nav li.on a { background: rgba(12,45,95,.28); font-weight: 700; }
+
+  /* ============ 横幅 ============ */
+  .hero {
+    height: 330px;
+    background: url("https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=deep%20navy%20blue%20technology%20background%2C%20glowing%20golden%20and%20blue%20light%20beams%2C%20abstract%20digital%20particles%20and%20bokeh%20lights%2C%20city%20skyline%20silhouette%2C%20futuristic%20corporate%20banner%2C%20cinematic%2C%20no%20text&image_size=landscape_16_9") center / cover no-repeat;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-content { text-align: center; transform: translateY(-6px); }
+  .hero h2 {
+    color: #fff; font-size: 42px; font-weight: 700; letter-spacing: 4px;
+    text-shadow: 0 3px 12px rgba(0,20,60,.6);
+  }
+  .hero h2 .gold { color: #ffd75e; }
+  .hero-badge {
+    display: inline-block; margin-top: 24px; padding: 10px 34px;
+    background: rgba(35,90,175,.55); border: 1px solid rgba(255,255,255,.18);
+    color: #fff; font-size: 18px; letter-spacing: 5px;
+  }
+
+  /* ============ 服务导航 ============ */
+  .services-wrap { margin-top: 26px; }
+  .services {
+    display: flex; background: #fff; border: 1px solid #e4eaf3;
+    box-shadow: 0 3px 10px rgba(30,70,140,.06);
+  }
+  .service-grid {
+    flex: 1; display: grid; grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+  }
+  .service-item {
+    display: flex; align-items: center; gap: 12px; padding: 20px 18px;
+    border-right: 1px solid #edf1f7; border-bottom: 1px solid #edf1f7;
+    transition: background .2s; cursor: pointer;
+  }
+  .service-item:nth-child(3n) { border-right: none; }
+  .service-item:nth-child(n+4) { border-bottom: none; }
+  .service-item:hover { background: #f4f9ff; }
+  .service-item svg { width: 36px; height: 36px; flex-shrink: 0; }
+  .service-item span { font-size: 14px; color: #444; line-height: 1.5; transition: color .2s; }
+  .service-item:hover span { color: #1e5cb0; }
+  .icon-stroke { fill: none; stroke: #2563b8; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .icon-fill { fill: #2563b8; }
+
+  .service-side {
+    width: 290px; display: flex; border-left: 1px solid #edf1f7;
+  }
+  .side-item {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 10px; padding: 16px 8px; cursor: pointer;
+    transition: background .2s;
+  }
+  .side-item + .side-item { border-left: 1px solid #edf1f7; }
+  .side-item:hover { background: #f4f9ff; }
+  .side-item:hover .side-label { color: #1e5cb0; }
+  .side-label { font-size: 13px; color: #444; transition: color .2s; }
+gong'zugon .book-icon { width: 58px; height: 58px; }
+
+  /* ============ 新闻区 ============ */
+  .news { display: flex; gap: 24px; margin-top: 34px; padding-bottom: 50px; }
+  .news-left { width: 470px; flex-shrink: 0; }
+  .news-right { flex: 1; }
+
+  .section-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    border-bottom: 2px solid #e8edf4; padding-bottom: 12px;
+  }
+  .section-head h3 { font-size: 20px; color: #222; font-weight: 700; letter-spacing: 1px; }
+  .more { font-size: 13px; color: #2563b8; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+  .more:hover { color: #174a92; }
+  .more .plus {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 14px; height: 14px; background: #d0342c; color: #fff;
+    font-size: 12px; line-height: 1; border-radius: 2px; font-weight: 700;
+  }
+
+  .pic-news { margin-top: 16px; overflow: hidden; }
+  .pic-news img {
+    width: 100%; height: 300px; object-fit: cover; display: block;
+    transition: transform .4s;
+  }
+  .pic-news:hover img { transform: scale(1.04); }
+
+  .tabs { display: flex; gap: 30px; }
+  .tabs li {
+    font-size: 17px; color: #777; cursor: pointer; position: relative;
+    padding-bottom: 14px; margin-bottom: -14px; transition: color .2s;
+  }
+  .tabs li:hover { color: #1e5cb0; }
+  .tabs li.on { color: #222; font-weight: 700; }
+  .tabs li.on::after {
+    content: ""; position: absolute; left: 50%; bottom: -2px; transform: translateX(-50%);
+    width: 32px; height: 2px; background: #2563b8;
+  }
+
+  .news-list { margin-top: 6px; }
+  .news-item {
+    display: flex; align-items: center; padding: 15px 2px;
+    border-bottom: 1px solid #eef1f6; cursor: pointer;
+  }
+  .news-item:hover .news-title { color: #1e5cb0; }
+  .news-date { width: 66px; text-align: center; flex-shrink: 0; margin-right: 12px; }
+  .news-date .d { font-size: 28px; font-weight: 700; color: #2563b8; line-height: 1.1; }
+  .news-date .m { font-size: 12px; color: #9aa7b8; }
+  .news-title { font-size: 15px; color: #333; line-height: 1.6; transition: color .2s; }
+  .news-item:hover .news-date .d { color: #174a92; }
+
+  /* ============ 页脚 ============ */
+  .site-footer {
+    background: #1c56a8; color: #cfe0f5; text-align: center;
+    padding: 22px 0; font-size: 13px; line-height: 1.9;
+  }
+  .site-footer a { color: #fff; }
+  .site-footer a:hover { text-decoration: underline; }
+
+  /* ============ 子页面 ============ */
+  [hidden] { display: none !important; }
+  .sub-banner {
+    height: 130px;
+    background: url("https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=deep%20navy%20blue%20technology%20background%2C%20glowing%20golden%20and%20blue%20light%20beams%2C%20abstract%20digital%20particles%20and%20bokeh%20lights%2C%20city%20skyline%20silhouette%2C%20futuristic%20corporate%20banner%2C%20cinematic%2C%20no%20text&image_size=landscape_16_9") center 40% / cover no-repeat;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .sub-banner h2 {
+    color: #fff; font-size: 28px; font-weight: 700; letter-spacing: 4px;
+    text-shadow: 0 2px 10px rgba(0,20,60,.65);
+  }
+  .breadcrumb { padding: 16px 0 2px; font-size: 13px; color: #8a97a8; }
+  .breadcrumb a { color: #2563b8; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .sub-card {
+    background: #fff; border: 1px solid #e4eaf3;
+    box-shadow: 0 3px 10px rgba(30,70,140,.06);
+    padding: 24px 30px; margin: 12px 0 46px;
+  }
+  .page-title-bar {
+    display: flex; align-items: baseline; justify-content: space-between;
+    border-bottom: 2px solid #e8edf4; padding-bottom: 12px; margin-bottom: 4px;
+  }
+  .page-title-bar h3 { font-size: 20px; color: #222; font-weight: 700; letter-spacing: 1px; }
+  .count { font-size: 13px; color: #9aa7b8; }
+  .news-snip { font-size: 13px; color: #8a97a8; margin-top: 4px; line-height: 1.7; }
+  .page-intro p { font-size: 14px; color: #555; line-height: 2.1; margin-bottom: 6px; }
+  .article-head h1 { font-size: 22px; color: #222; line-height: 1.6; }
+  .article-meta { display: flex; gap: 18px; margin-top: 12px; font-size: 13px; color: #9aa7b8; }
+  .article-body { margin-top: 20px; border-top: 1px dashed #e8edf4; padding-top: 20px; }
+  .article-body p { font-size: 15px; color: #444; line-height: 2; margin-bottom: 12px; text-indent: 2em; }
+  .article-nav { margin-top: 22px; border-top: 1px solid #eef1f6; padding-top: 14px; font-size: 13px; }
+  .article-nav a { display: block; color: #555; margin-bottom: 8px; line-height: 1.8; }
+  .article-nav a:hover { color: #1e5cb0; }
+  .article-nav a span { color: #b3bdc9; }
+  .back-btn {
+    display: inline-block; margin-top: 14px; padding: 8px 24px;
+    border: 1px solid #bcd2ec; color: #2563b8; font-size: 13px;
+    border-radius: 3px; transition: all .2s;
+  }
+  .back-btn:hover { background: #f4f9ff; }
+  mark { background: #fff3bf; color: #c0392b; padding: 0 1px; }
+  .no-result { text-align: center; color: #9aa7b8; padding: 36px 0; font-size: 14px; line-height: 2; }
+  .svc-head { border-bottom: 2px solid #e8edf4; padding-bottom: 16px; }
+  .svc-head h3 { font-size: 20px; color: #222; padding-left: 12px; border-left: 4px solid #2563b8; }
+  .svc-body p { font-size: 14px; color: #555; line-height: 2.1; margin-top: 16px; }
+  .contact-list { margin-top: 18px; border-top: 1px dashed #e8edf4; padding-top: 8px; }
+  .contact-list li { font-size: 14px; color: #555; line-height: 2.4; }
+  .contact-list b { color: #2563b8; }
+
+  /* ============ 用户中心 + 论坛 ============ */
+  .auth-avatar-wrap { position: relative; display: flex; align-items: center; gap: 8px; }
+  .auth-avatar { width: 40px; height: 40px; border-radius: 50%; cursor: pointer; border: 2px solid #bcd2ec; object-fit: cover; }
+  .auth-avatar-name { font-size: 14px; color: #1a5cb0; font-weight: 700; cursor: pointer; }
+  .avatar-menu {
+    position: absolute; top: 48px; right: 0; width: 140px; background: #fff;
+    border: 1px solid #e4eaf3; border-radius: 4px;
+    box-shadow: 0 6px 18px rgba(30,70,140,.18); z-index: 99; overflow: hidden;
+  }
+  .avatar-menu a { display: block; padding: 10px 16px; font-size: 13px; color: #444; cursor: pointer; }
+  .avatar-menu a:hover { background: #f4f9ff; color: #1e5cb0; }
+  .hc-btn {
+    display: inline-block; padding: 9px 28px; border: none; cursor: pointer;
+    background: linear-gradient(180deg,#3a7bd0,#1e5cb0); color: #fff;
+    font-size: 14px; border-radius: 3px; letter-spacing: 1px;
+  }
+  .hc-btn:hover { background: linear-gradient(180deg,#2f6fbe,#1a529e); }
+  .hc-btn.on { background: #e8edf4; color: #2563b8; }
+  .post-form input[type="text"], .settings-form input[type="text"] {
+    width: 100%; height: 38px; border: 1px solid #d4dfee; padding: 0 12px;
+    font-size: 14px; outline: none; color: #333; margin-top: 14px;
+  }
+  .post-form textarea, .settings-form textarea {
+    width: 100%; border: 1px solid #d4dfee; padding: 10px 12px; font-size: 14px;
+    outline: none; color: #333; margin-top: 12px; resize: vertical; font-family: inherit;
+  }
+  .post-form input:focus, .post-form textarea:focus,
+  .settings-form input:focus, .settings-form textarea:focus { border-color: #2563b8; }
+  .post-form .hc-btn { margin-top: 12px; }
+  .post-item { border-bottom: 1px solid #eef1f6; padding: 16px 2px; }
+  .post-title { font-size: 16px; font-weight: 700; color: #222; line-height: 1.6; }
+  .post-link:hover { color: #1e5cb0; }
+  .post-content {
+    font-size: 14px; color: #555; line-height: 1.8; margin-top: 6px;
+    max-height: 66px; overflow: hidden; word-break: break-all; white-space: pre-wrap;
+  }
+  .post-meta { display: flex; gap: 16px; align-items: center; margin-top: 10px; font-size: 13px; color: #9aa7b8; }
+  .post-author { color: #2563b8; }
+  .post-author:hover { text-decoration: underline; }
+  .like-btn { cursor: pointer; user-select: none; }
+  .like-btn.liked { color: #d0342c; }
+  .like-btn i { font-style: normal; }
+  .del-btn { cursor: pointer; color: #d0342c; }
+  .del-btn:hover { text-decoration: underline; }
+  .user-head { display: flex; gap: 20px; align-items: center; }
+  .user-avatar { width: 64px; height: 64px; border-radius: 50%; border: 2px solid #bcd2ec; object-fit: cover; flex-shrink: 0; }
+  .user-info { flex: 1; min-width: 0; }
+  .user-name { font-size: 20px; font-weight: 700; color: #222; }
+  .user-name .hc-link { font-size: 13px; font-weight: 400; color: #2563b8; margin-left: 10px; }
+  .user-name .hc-link:hover { text-decoration: underline; }
+  .user-email { font-size: 13px; color: #9aa7b8; margin-top: 4px; }
+  .user-bio { font-size: 14px; color: #555; margin-top: 8px; line-height: 1.7; }
+  .user-meta { font-size: 13px; color: #9aa7b8; margin-top: 8px; }
+  .follow-btn { flex-shrink: 0; }
+  .settings-form label { display: block; font-size: 14px; color: #444; margin-top: 16px; }
+  .settings-form .form-row { margin-bottom: 4px; }
+  .bio-count { font-size: 12px; color: #9aa7b8; text-align: right; margin-top: 4px; }
+  .settings-form .hc-btn { margin-top: 14px; }
+  .user-result-item {
+    display: flex; align-items: center; gap: 12px; padding: 14px 2px;
+    border-bottom: 1px solid #eef1f6; cursor: pointer;
+  }
+  .user-result-item:hover .ur-name { color: #1e5cb0; }
+  .ur-avatar { width: 32px; height: 32px; border-radius: 50%; border: 1px solid #bcd2ec; object-fit: cover; flex-shrink: 0; }
+  .ur-info { flex: 1; min-width: 0; }
+  .ur-name { font-size: 15px; font-weight: 700; color: #333; }
+  .ur-bio { font-size: 13px; color: #8a97a8; margin-top: 2px; }
+  .ur-fans { font-size: 13px; color: #9aa7b8; flex-shrink: 0; }
+
+  /* ============ 响应式 ============ */
+  @media (max-width: 1040px) {
+    body { min-width: 0; }
+    .container { width: auto; padding: 0 14px; }
+    .news { flex-direction: column; }
+    .news-left { width: 100%; }
+    .service-grid { grid-template-columns: repeat(2, 1fr); }
+    .service-item:nth-child(3n) { border-right: 1px solid #edf1f7; }
+    .service-item:nth-child(2n) { border-right: none; }
+    .service-item:nth-child(n+4) { border-bottom: 1px solid #edf1f7; }
+    .service-side { display: none; }
+    .hero h2 { font-size: 30px; }
+  }
+
+  /* ============ hc- 新增功能样式 ============ */
+  .hc-announce { background: #fff6d6; border-bottom: 1px solid #e3cf8e; color: #6e5310; font-size: 13px; }
+  .hc-announce-inner { padding: 8px 0; line-height: 1.6; }
+  .hc-vbadge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 15px; height: 15px; border-radius: 50%; color: #fff;
+    font-size: 10px; font-weight: 700; line-height: 1; margin-left: 4px;
+    vertical-align: 2px; font-style: normal;
+  }
+  .hc-vtitle { font-size: 12px; color: #b8870b; margin-top: 3px; }
+  .hc-btn2 {
+    display: inline-block; padding: 9px 22px; border: 1px solid #bcd2ec; cursor: pointer;
+    background: #fff; color: #2563b8; font-size: 14px; border-radius: 3px;
+  }
+  .hc-btn2:hover { background: #f4f9ff; }
+  .hc-btn-sm { padding: 5px 14px; font-size: 13px; }
+  .hc-modal-mask {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(15,35,70,.45); z-index: 999;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hc-dialog { width: 420px; background: #fff; border-radius: 6px; box-shadow: 0 10px 40px rgba(10,40,90,.3); padding: 22px 26px; }
+  .hc-dialog h3 { font-size: 17px; color: #222; border-bottom: 2px solid #e8edf4; padding-bottom: 10px; }
+  .hc-dialog label { display: block; font-size: 13px; color: #444; margin-top: 14px; }
+  .hc-dialog select, .hc-dialog input[type="text"], .hc-dialog textarea {
+    width: 100%; border: 1px solid #d4dfee; padding: 8px 10px; font-size: 13px; outline: none;
+    margin-top: 6px; font-family: inherit; border-radius: 3px; background: #fff;
+  }
+  .hc-dialog select:focus, .hc-dialog input:focus, .hc-dialog textarea:focus { border-color: #2563b8; }
+  .hc-dialog-btns { margin-top: 18px; text-align: right; }
+  .hc-dialog-btns .hc-btn2 { margin-right: 10px; }
+  .hc-member-top { display: flex; gap: 24px; margin-top: 16px; }
+  .hc-coin-card { flex: 1; text-align: center; padding: 24px 0; background: linear-gradient(180deg,#fff9e6,#fff3cf); border: 1px solid #eed88f; border-radius: 6px; }
+  .hc-coin-num { font-size: 38px; font-weight: 700; color: #d99a00; line-height: 1.2; }
+  .hc-coin-label { font-size: 13px; color: #8a6d1f; margin-top: 6px; }
+  .hc-verify-card { flex: 1; padding: 20px 24px; background: #f7faff; border: 1px solid #dbe7f7; border-radius: 6px; }
+  .hc-verify-card h4 { font-size: 14px; color: #444; }
+  .hc-verify-now { display: block; margin-top: 14px; font-size: 16px; color: #222; font-weight: 700; }
+  .hc-stats { display: flex; gap: 24px; margin-top: 24px; }
+  .hc-stat { flex: 1; text-align: center; border: 1px solid #e4eaf3; border-radius: 6px; padding: 16px 0; }
+  .hc-stat b { font-size: 26px; color: #1e5cb0; }
+  .hc-stat span { display: block; font-size: 13px; color: #8a97a8; margin-top: 4px; }
+  .hc-ach-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 16px; }
+  .hc-ach { border: 1px solid #e4eaf3; border-radius: 6px; padding: 16px 12px; text-align: center; }
+  .hc-ach .hc-ach-name { font-size: 14px; font-weight: 700; color: #333; }
+  .hc-ach .hc-ach-desc { font-size: 12px; color: #8a97a8; margin-top: 6px; line-height: 1.6; min-height: 38px; }
+  .hc-ach .hc-ach-coin { font-size: 12px; color: #d99a00; margin-top: 6px; }
+  .hc-ach.hc-ach-got { background: linear-gradient(180deg,#fff9e6,#ffefc2); border-color: #eed88f; }
+  .hc-ach.hc-ach-got .hc-ach-name { color: #b8870b; }
+  .hc-ach.hc-ach-lock { background: #f4f6f9; }
+  .hc-ach.hc-ach-lock .hc-ach-name { color: #9aa7b8; }
+  .hc-ach-date { font-size: 12px; color: #7a5b12; margin-top: 6px; }
+  .hc-conv-item { display: flex; align-items: center; gap: 12px; padding: 14px 2px; border-bottom: 1px solid #eef1f6; }
+  .hc-conv-item:hover .hc-conv-name { color: #1e5cb0; }
+  .hc-conv-info { flex: 1; min-width: 0; }
+  .hc-conv-name { font-size: 15px; font-weight: 700; color: #333; }
+  .hc-conv-last { font-size: 13px; color: #8a97a8; margin-top: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .hc-conv-time { font-size: 12px; color: #b3bdc9; flex-shrink: 0; }
+  .hc-chat-msgs { height: 400px; overflow-y: auto; padding: 16px 10px; background: #f7f9fc; border: 1px solid #e4eaf3; border-radius: 4px; margin-top: 12px; }
+  .hc-msg-row { display: flex; margin-bottom: 12px; }
+  .hc-msg-row.hc-me { justify-content: flex-end; }
+  .hc-msg { max-width: 68%; padding: 9px 13px; border-radius: 8px; font-size: 14px; line-height: 1.7; word-break: break-all; white-space: pre-wrap; }
+  .hc-msg-row.hc-me .hc-msg { background: #2f74ce; color: #fff; border-bottom-right-radius: 2px; }
+  .hc-msg-row.hc-peer .hc-msg { background: #fff; color: #333; border: 1px solid #e4eaf3; border-bottom-left-radius: 2px; }
+  .hc-msg-time { font-size: 11px; color: #b3bdc9; margin-top: 3px; }
+  .hc-chat-input { display: flex; gap: 10px; margin-top: 12px; }
+  .hc-chat-input input { flex: 1; height: 40px; border: 1px solid #d4dfee; border-radius: 3px; padding: 0 12px; font-size: 14px; outline: none; }
+  .hc-chat-input input:focus { border-color: #2563b8; }
+  .hc-tabs { display: flex; gap: 4px; border-bottom: 2px solid #e8edf4; }
+  .hc-tabs a { padding: 10px 20px; font-size: 14px; color: #555; cursor: pointer; margin-bottom: -2px; border-bottom: 2px solid transparent; }
+  .hc-tabs a:hover { color: #1e5cb0; }
+  .hc-tabs a.on { color: #1e5cb0; font-weight: 700; border-bottom-color: #2563b8; }
+  .hc-table { width: 100%; border-collapse: collapse; margin-top: 4px; font-size: 13px; }
+  .hc-table th { background: #f2f6fc; color: #444; font-weight: 700; padding: 9px 10px; border: 1px solid #e4eaf3; text-align: left; }
+  .hc-table td { padding: 9px 10px; border: 1px solid #e4eaf3; color: #444; vertical-align: middle; }
+  .hc-table tr.hc-off td { background: #f6f7f9; color: #aab3bf; }
+  .hc-edit-row td { background: #fbfdff; }
+  .hc-mini-form label { font-size: 12px; color: #8a97a8; margin-right: 6px; }
+  .hc-mini-form input[type="text"], .hc-mini-form select {
+    border: 1px solid #d4dfee; padding: 5px 8px; font-size: 13px; border-radius: 3px; outline: none; margin: 2px 8px 2px 0;
+  }
+  .hc-mini-form input[type="text"]:focus, .hc-mini-form select:focus { border-color: #2563b8; }
+  .hc-danger { color: #d0342c; cursor: pointer; }
+  .hc-danger:hover { text-decoration: underline; }
+  .hc-link-btn { color: #2563b8; cursor: pointer; }
+  .hc-link-btn:hover { text-decoration: underline; }
+
+  /* ============ hc- 新增：导航消息红点 ============ */
+  .main-nav .hc-badge {
+    position: absolute; top: 7px; left: 50%; margin-left: 15px;
+    min-width: 17px; height: 17px; line-height: 17px; padding: 0 5px;
+    border-radius: 9px; background: #e53935; color: #fff;
+    font-size: 11px; font-weight: 700; text-align: center;
+    pointer-events: none; box-shadow: 0 1px 3px rgba(120,20,20,.35);
+  }
+
+  /* ============ hc- 新增：发帖表单错误提示 ============ */
+  .hc-error { color: #d0342c; font-size: 13px; margin-top: 10px; line-height: 1.6; }
+
+  /* ============ hc- 新增：帖子回复区 ============ */
+  .hc-reply-btn { cursor: pointer; color: #2563b8; user-select: none; }
+  .hc-reply-btn:hover { text-decoration: underline; }
+  .hc-reply-btn.on { color: #1e5cb0; font-weight: 700; }
+  .hc-reply-btn i { font-style: normal; }
+  .hc-reply-area { margin-top: 12px; border-top: 1px dashed #e4eaf3; padding-top: 12px; }
+  .hc-reply-list { margin-bottom: 4px; }
+  .hc-reply-item { display: flex; gap: 10px; padding: 9px 0; border-bottom: 1px solid #f0f3f8; }
+  .hc-reply-item:last-child { border-bottom: none; }
+  .hc-reply-avatar {
+    flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%;
+    background: linear-gradient(180deg,#3a7bd0,#1e5cb0); color: #fff;
+    font-size: 14px; font-weight: 700; line-height: 32px; text-align: center;
+  }
+  .hc-reply-main { flex: 1; min-width: 0; }
+  .hc-reply-head { font-size: 13px; color: #9aa7b8; display: flex; align-items: center; flex-wrap: wrap; }
+  .hc-reply-name { font-weight: 700; color: #1a5cb0; margin-right: 6px; }
+  .hc-reply-name:hover { text-decoration: underline; }
+  .hc-reply-time { font-size: 12px; color: #b3bdc9; }
+  .hc-reply-del { color: #d0342c; cursor: pointer; margin-left: 10px; font-size: 12px; }
+  .hc-reply-del:hover { text-decoration: underline; }
+  .hc-reply-content { font-size: 14px; color: #333; line-height: 1.7; margin-top: 3px; word-break: break-all; white-space: pre-wrap; }
+  .hc-reply-input-row { display: flex; gap: 10px; margin-top: 10px; }
+  .hc-reply-input-row input {
+    flex: 1; height: 36px; border: 1px solid #d4dfee; border-radius: 3px;
+    padding: 0 12px; font-size: 13px; outline: none; color: #333;
+  }
+  .hc-reply-input-row input:focus { border-color: #2563b8; }
+  .hc-reply-input-row .hc-btn { padding: 0 22px; line-height: 36px; }
+  .hc-reply-login { display: inline-block; margin-top: 10px; font-size: 13px; color: #2563b8; }
+  .hc-reply-login:hover { text-decoration: underline; }
+  .hc-reply-err { color: #d0342c; font-size: 13px; margin-top: 8px; }
+
+  /* ============ hc- 新增：管理员小标 ============ */
+  .hc-admin-tag {
+    display: inline-block; margin-left: 6px; padding: 1px 6px; font-size: 11px;
+    background: #fff1d6; border: 1px solid #f0c869; color: #b8870b;
+    border-radius: 3px; vertical-align: middle;
+  }
+</style>
+</head>
+<body>
+
+<!-- ======== 顶部 ======== -->
+<header class="site-header">
+  <div class="header-inner container">
+    <a class="brand" href="#/home">
+      <img src="img/ico.png" alt="昊宸工作室" width="58" height="58" style="flex-shrink:0;">
+      <div class="brand-text">
+        <h1>昊宸工作室</h1>
+        <p>Haochen Studio</p>
+      </div>
+    </a>
+    <div class="header-right">
+      <div class="auth-area" id="authArea"></div>
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="输入关键词搜索">
+        <button id="searchBtn">搜索</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ======== 公告栏 ======== -->
+<div class="hc-announce" id="hcAnnounce" hidden>
+  <div class="hc-announce-inner container">📢 <span id="hcAnnounceText"></span></div>
+</div>
+
+<!-- ======== 导航 ======== -->
+<nav class="main-nav">
+  <ul class="container" id="navList">
+    <li class="on"><a href="#/home">首页</a></li>
+    <li><a href="#/page/about">工作室概况</a></li>
+    <li><a href="#/list/industry">行业资讯</a></li>
+    <li><a href="#/page/rules">制度规则</a></li>
+    <li><a href="#/forum">论坛</a></li>
+    <li><a href="#/messages">消息</a><span class="hc-badge" id="hcUnreadBadge" hidden></span></li>
+  </ul>
+</nav>
+
+<div id="page-home">
+<!-- ======== 横幅 ======== -->
+<section class="hero">
+  <div class="hero-content">
+    <h2><span class="gold">搭建科技互通桥梁</span> · 共筑科技辉煌时代</h2>
+    <p class="hero-badge">努力建设全国一流科技专业行业工作室</p>
+  </div>
+</section>
+
+<!-- ======== 服务导航 ======== -->
+<div class="services-wrap container">
+  <div class="services">
+    <div class="service-grid">
+      <a class="service-item" href="#/service/info">
+        <svg viewBox="0 0 48 48" class="icon-stroke">
+          <rect x="8" y="8" width="32" height="9" rx="2"/>
+          <rect x="8" y="19.5" width="32" height="9" rx="2"/>
+          <rect x="8" y="31" width="32" height="9" rx="2"/>
+          <circle cx="14" cy="12.5" r="1.4" class="icon-fill"/>
+          <circle cx="14" cy="24" r="1.4" class="icon-fill"/>
+          <circle cx="14" cy="35.5" r="1.4" class="icon-fill"/>
+        </svg>
+        <span>技术资讯服务平台</span>
+      </a>
+      <a class="service-item" href="#/service/check">
+        <svg viewBox="0 0 48 48" class="icon-stroke">
+          <g transform="rotate(45 26 15)">
+            <rect x="21" y="6" width="10" height="16" rx="2"/>
+            <line x1="26" y1="22" x2="26" y2="27"/>
+          </g>
+          <line x1="12" y1="35" x2="34" y2="35"/>
+          <line x1="9" y1="40" x2="31" y2="40"/>
+        </svg>
+        <span>代码质量与协作平台</span>
+      </a>
+      <a class="service-item" href="#/service/talent">
+        <svg viewBox="0 0 48 48" class="icon-stroke">
+          <circle cx="19" cy="15" r="6"/>
+          <path d="M9 38c0-6.5 4.5-10.5 10-10.5 2.4 0 4.6.7 6.4 2"/>
+          <circle cx="33" cy="31" r="6"/>
+          <line x1="37.4" y1="35.4" x2="42" y2="40"/>
+        </svg>
+        <span>人才供求</span>
+      </a>
+      <a class="service-item" href="#/service/train">
+        <svg viewBox="0 0 48 48" class="icon-stroke">
+          <path d="M24 11 6 19l18 8 18-8-18-8z"/>
+          <path d="M14 24v7.5c0 3 4.5 5 10 5s10-2 10-5V24"/>
+          <line x1="42" y1="19" x2="42" y2="29"/>
+        </svg>
+        <span>技术学院在线课堂</span>
+      </a>
+      <a class="service-item" href="#/service/exam">
+        <svg viewBox="0 0 48 48" class="icon-stroke">
+          <rect x="10" y="8" width="28" height="32" rx="3"/>
+          <circle cx="19" cy="19" r="4"/>
+          <path d="M13.5 30c0-3 2.4-5 5.5-5s5.5 2 5.5 5"/>
+          <line x1="29" y1="16" x2="34" y2="16"/>
+          <line x1="29" y1="22" x2="34" y2="22"/>
+          <line x1="14" y1="35" x2="34" y2="35"/>
+        </svg>
+        <span>技术认证考试</span>
+      </a>
+      <a class="service-item" href="#/service/contact">
+        <svg viewBox="0 0 48 48" class="icon-stroke">
+          <path d="M15 8c-2.5 0-4.5 2-4.5 4.5C10.5 26.5 21.5 37.5 35.5 37.5c2.5 0 4.5-2 4.5-4.5v-4.6l-7.4-3-3.2 4c-4.8-2.2-7.7-5.1-9.9-9.9l4-3.2-3-7.4H15z"/>
+        </svg>
+        <span>联系我们</span>
+      </a>
+    </div>
+    <div class="service-side">
+      <a class="side-item" href="#/service/guide">
+        <svg viewBox="0 0 48 48" class="icon-stroke book-icon">
+          <path d="M24 12c-4-3-9.5-4-15.5-4v28c6 0 11.5 1 15.5 4 4-3 9.5-4 15.5-4V8c-6 0-11.5 1-15.5 4z"/>
+          <line x1="24" y1="12" x2="24" y2="40"/>
+        </svg>
+        <span class="side-label">会员办事指南</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ======== 新闻区 ======== -->
+<main class="news container">
+  <div class="news-left">
+    <div class="section-head">
+      <h3>图片新闻</h3>
+      <a class="more" href="#/list/pic">更多 <span class="plus">+</span></a>
+    </div>
+    <figure class="pic-news">
+      <a href="#/article/16"><img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=modern%20bright%20conference%20hall%20interior%20with%20rows%20of%20seats%20and%20warm%20ceiling%20lights%2C%20professional%20event%20venue%20photography%2C%20wide%20angle&image_size=landscape_4_3" alt="图片新闻"></a>
+    </figure>
+  </div>
+
+  <div class="news-right">
+    <div class="section-head">
+      <h3>行业资讯</h3>
+      <a class="more" href="#/list/industry">更多 <span class="plus">+</span></a>
+    </div>
+    <ul class="news-list" id="newsList"></ul>
+  </div>
+</main>
+</div>
+
+<!-- ======== 子页面 ======== -->
+<div id="page-sub" hidden>
+  <div class="sub-banner"><h2 id="sub-banner-title"></h2></div>
+  <div class="container">
+    <div class="breadcrumb" id="sub-crumb"></div>
+    <div id="sub-view"></div>
+  </div>
+</div>
+
+<!-- ======== 页脚 ======== -->
+<footer class="site-footer">
+  <div class="container">
+    版权所有 © 昊宸工作室 · 蜀ICP备00000000号<br>
+    地址：四川省成都市××路××号 &nbsp;|&nbsp; 电话：028-88888888
+  </div>
+</footer>
+
+<script>
+  // ===== 数据：栏目 =====
+  var CATS = {
+    industry: '行业资讯', pic: '图片新闻',
+    rules: '制度规则'
+  };
+
+  // ===== 数据：栏目页简介 =====
+  var PAGES = {
+    about: {
+      title: '工作室概况', contactInfo: true,
+      intro: [
+        '昊宸工作室是一家致力于搭建科技互通桥梁的专业服务机构。自成立以来，始终秉持“专业、诚信、协作、共赢”的价值观，持续为客户与合作伙伴创造价值。',
+        '工作室聚焦信息技术、专业咨询、教育培训等领域，拥有一支经验丰富、充满活力的专业团队，努力建设全国一流科技专业行业工作室。',
+        '展望未来，昊宸工作室将继续深耕专业领域、拓宽服务视野，与社会各界携手，共筑科技辉煌时代。'
+      ]
+    },
+    rules: {
+      title: '制度规则', cat: 'rules',
+      intro: [
+        '工作室始终把制度建设摆在重要位置，建立健全覆盖章程、会员管理、技术服务规范、收费自律等方面的制度体系。',
+        '各项制度将根据发展需要动态修订完善，请大家自觉学习遵守，共同维护良好秩序。'
+      ]
+    }
+  };
+
+  // ===== 数据：服务页 =====
+  var SERVICES = {
+    info:    { title: '技术资讯平台', desc: ['平台汇集技术资讯、开源动态与行业数据报告，提供一站式信息查询与业务办理服务。', '登录平台后可享受信息发布、资料下载、在线申报等服务，随时掌握最新技术动态。'] },
+    check:   { title: '代码质量平台', desc: ['平台面向技术团队提供代码质量检测与项目协作服务，支持自查上报、问题反馈与结果查询。', '各团队应按时登录完成代码自查上报，共同维护良好的工程质量秩序。'] },
+    talent:  { title: '人才供求', desc: ['人才供求频道提供技术人才招聘与求职信息发布服务，促进人才与团队精准对接。', '企业与个人可按指引发布供求信息，平台将及时推送匹配信息。'] },
+    train:   { title: '技术学院在线课堂', desc: ['在线课堂汇集精品课程、直播讲座与技术资料，覆盖人工智能、云计算、软件开发等方向，支持在线学习与证书查询。', '登录后可根据自身需求制定学习计划，完成阶段学习目标。'] },
+    exam:    { title: '技术认证考试', desc: ['技术认证考试实行统一报名，报名、打印准考证、成绩查询均通过统一系统办理。', '本频道提供认证政策咨询、报名指南与备考资料等服务，欢迎随时咨询。'] },
+    contact: { title: '联系我们', contact: true, desc: ['如有任何问题或合作意向，欢迎通过以下方式与我们联系，我们将竭诚为您服务。'] },
+    guide:   { title: '会员办事指南', desc: ['办事指南汇集会员常见业务的办理流程与材料要求，涵盖入会申请、信息变更、证明开具等事项。', '办理过程中如有疑问，请随时咨询工作室，我们将全力协助办理。'] }
+  };
+
+  // ===== 数据：文章 =====
+  var ARTICLES = [
+    { id: 6,  cat: 'industry', date: '2026-10-17', title: '全国人工智能产业高质量发展座谈会在蓉召开',
+      body: ['全国人工智能产业高质量发展座谈会近日在成都举行。来自行业组织、科技企业及科研机构的代表围绕大模型应用、算力基础设施、人才培养等议题深入交流。', '会议指出，产业要坚持自主创新与开放协作并重，不断提升核心技术能力，更好地服务实体经济数字化转型。本工作室代表受邀参会并作交流发言。'] },
+    { id: 7,  cat: 'industry', date: '2026-09-25', title: '最新一期软件与信息技术服务业统计报告发布',
+      body: ['权威研究机构近日发布最新一期软件与信息技术服务业统计报告。数据显示，上半年行业业务收入保持稳步增长，从业人员数量持续增加，队伍结构不断优化。', '报告同时指出，云计算、大数据与人工智能服务能力显著提升，企业线上化服务率逐年提高，为行业高质量发展提供了有力支撑。'] },
+    { id: 8,  cat: 'industry', date: '2026-09-08', title: '我省三家科技企业入选全国软件百强名单',
+      body: ['2026年全国软件与信息技术服务百强企业名单近日正式揭晓，我省三家科技企业榜上有名，行业排名实现新突破。', '近年来，我省持续加强科技创新生态建设与服务质量监管，科技企业综合实力与品牌影响力稳步提升。希望入选单位珍惜荣誉，继续发挥行业带头作用。'] },
+    { id: 9,  cat: 'industry', date: '2026-08-21', title: '企业数字化转型论坛成功举办',
+      body: ['企业数字化转型论坛近日举行。论坛围绕人工智能落地、大数据治理、云原生架构等热点话题，专家学者与技术骨干进行了精彩分享。', '论坛还设置了圆桌对话环节，嘉宾们就数字化转型带来的机遇与挑战展开讨论。参会者普遍反映收获颇丰、深受启发。'] },
+    { id: 10, cat: 'industry', date: '2026-08-05', title: '科技行业人才培养与职业化建设交流会圆满结束',
+      body: ['科技行业人才培养与职业化建设交流会近日在成都圆满落幕。会议围绕人才培训体系、技术能力评价、职业素养建设等议题总结经验、谋划未来。', '会议发布了行业人才培养行动计划，提出要持续深化产教融合，完善分层分类培训机制，为行业发展提供坚实人才支撑。'] },
+    { id: 16, cat: 'pic',      date: '2026-10-10', title: '2026年度科技创新峰会现场',
+      body: ['2026年度科技创新峰会近日在成都成功举行。峰会总结了过去一年的技术发展成果，并对优秀创新团队和先进个人进行了表彰。', '图为峰会现场，与会代表认真听取主题报告，并围绕人工智能与云计算等议题进行了分组讨论。'] },
+    { id: 17, cat: 'pic',      date: '2026-09-20', title: '黑客马拉松大赛精彩瞬间',
+      body: ['年度黑客马拉松大赛近日顺利举行，来自各会员单位与高校的开发者们在赛场上奋力拼搏，展现了良好的技术实力与团队凝聚力。', '经过激烈角逐，各赛道均决出名次，大赛在热烈友好的氛围中圆满落幕。'] },
+    { id: 18, cat: 'pic',      date: '2026-08-15', title: '会员单位走访活动纪实',
+      body: ['为深入了解会员需求、提升服务质量，工作室近日组织开展了会员单位专题走访活动。', '走访组深入研发一线，了解技术团队建设与项目开展情况，听取会员意见建议，并现场解答相关政策问题。'] },
+    { id: 23, cat: 'rules',    date: '2026-09-05', title: '《昊宸工作室章程》（2026修订版）发布',
+      body: ['《昊宸工作室章程》修订版经成员大会审议通过，现予发布施行。', '本次修订重点完善了组织架构、成员权利义务与财务管理制度，为规范运行提供了更坚实的制度保障。'] },
+    { id: 24, cat: 'rules',    date: '2026-08-18', title: '《会员管理办法》正式施行',
+      body: ['《会员管理办法》经审议通过并正式施行，办法明确了入会、权利义务、考核奖惩及退出等规则。', '请大家认真学习遵守，执行中如有疑问可随时向秘书处反映。'] },
+    { id: 25, cat: 'rules',    date: '2026-07-20', title: '技术服务规范修订说明',
+      body: ['为进一步规范技术服务行为、提升服务质量，工作室组织修订了《技术服务规范》。本次修订重点补充了服务诚信要求与职业操守规范。', '修订后的规范将在征求成员意见后正式发布，请从业人员及时关注学习。'] },
+    { id: 26, cat: 'rules',    date: '2026-06-25', title: '《收费自律公约》公开征求意见',
+      body: ['为维护公平有序的市场环境、遏制低价恶性竞争，工作室起草了《收费自律公约》，现向社会公开征求意见。', '欢迎会员和社会各界在规定时间内提出宝贵意见，我们将认真研究吸收完善。'] }
+  ];
+
+  // ===== 工具 =====
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function hl(text, kw) {
+    var t = esc(text);
+    if (!kw) return t;
+    var re = new RegExp(kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+    return t.replace(re, '<mark>$&</mark>');
+  }
+  function byCat(cat) {
+    return ARTICLES.filter(function (a) { return a.cat === cat && !hcIsHidden(a); })
+      .sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+  }
+  function rowHtml(a, kw, snip) {
+    var p = a.date.split('-');
+    return '<li><a class="news-item" href="#/article/' + a.id + '">' +
+             '<div class="news-date"><div class="d">' + p[2] + '</div><div class="m">' + p[0] + '-' + p[1] + '</div></div>' +
+             '<div><div class="news-title">' + hl(a.title, kw) + '</div>' +
+             (snip ? '<div class="news-snip">' + hl(snip, kw) + '</div>' : '') + '</div>' +
+           '</a></li>';
+  }
+  function crumbHtml(items) {
+    return items.map(function (it) {
+      return it.href ? '<a href="' + it.href + '">' + esc(it.name) + '</a>' : esc(it.name);
+    }).join(' &gt; ');
+  }
+  function contactHtml() {
+    return '<ul class="contact-list">' +
+      '<li><b>地址：</b>四川省成都市××路××号</li>' +
+      '<li><b>电话：</b>028-88888888</li>' +
+      '<li><b>邮箱：</b>contact@haochen.studio</li>' +
+      '<li><b>工作时间：</b>周一至周五 9:00 - 17:30</li></ul>';
+  }
+  function notFound() {
+    return '<div class="sub-card"><div class="no-result">抱歉，您访问的页面不存在或已被移动<br>' +
+      '<a class="back-btn" href="#/home">返回首页</a></div></div>';
+  }
+  function navByCat(cat) {
+    var m = { industry: 2, pic: 2, rules: 3 };
+    return m[cat] !== undefined ? m[cat] : -1;
+  }
+  function escq(s) { return esc(s).replace(/"/g, '&quot;'); }
+  function fmtTime(ts) {
+    var d = new Date(ts * 1000);
+    function p(n) { return n < 10 ? '0' + n : '' + n; }
+    return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) +
+      ' ' + p(d.getHours()) + ':' + p(d.getMinutes());
+  }
+  function needLoginHtml() {
+    return '<div class="sub-card"><div class="no-result">请先登录后查看<br>' +
+      '<a class="back-btn" href="login.html">去登录</a></div></div>';
+  }
+
+  // ===== hc- 新增：V认证标识 =====
+  function hcBadge(t) {
+    var colors = { blue: '#1e88ff', yellow: '#f5b301', white: '#8a94a6' };
+    var names = { blue: '蓝V认证创作者', yellow: '黄V优质创作者', white: '白V官方认证' };
+    if (!t || !colors[t]) return '';
+    return '<i class="hc-vbadge" style="background:' + colors[t] + '" title="' + names[t] + '">V</i>';
+  }
+
+  // ===== hc- 新增：公告栏 =====
+  function loadAnnouncement() {
+    if (location.protocol !== 'http:' && location.protocol !== 'https:') return;
+    fetch('api.php?action=announcement')
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        var bar = document.getElementById('hcAnnounce');
+        if (!bar) return;
+        var c = d && d.content ? String(d.content).trim() : '';
+        if (c) {
+          document.getElementById('hcAnnounceText').textContent = c;
+          bar.hidden = false;
+        } else {
+          bar.hidden = true;
+        }
+      })
+      .catch(function () {});
+  }
+
+  // ===== hc- 新增：新闻状态整合（下架 + 自定义新闻） =====
+  var hiddenNews = [];
+  function hcIsHidden(a) {
+    if (hiddenNews.indexOf(String(a.id)) !== -1) return true;
+    if (a._nid !== undefined && hiddenNews.indexOf(String(a._nid)) !== -1) return true;
+    return false;
+  }
+  function applyNewsState(d) {
+    hiddenNews = (d.hidden || []).map(function (x) { return String(x); });
+    (d.custom || []).forEach(function (c) {
+      var sid = 'c' + c.id;
+      var art = {
+        id: sid, _nid: +c.id, cat: c.cat, date: c.date, title: c.title,
+        body: Object.prototype.toString.call(c.body) === '[object Array]'
+          ? c.body
+          : String(c.body || '').split(/\n+/).filter(function (s) { return s.trim(); })
+      };
+      for (var i = 0; i < ARTICLES.length; i++) {
+        if (String(ARTICLES[i].id) === sid) { ARTICLES[i] = art; return; }
+      }
+      ARTICLES.push(art);
+    });
+  }
+
+  // ===== 视图 =====
+  function listBody(cat) {
+    var list = byCat(cat);
+    return '<div class="sub-card"><div class="page-title-bar"><h3>' + esc(CATS[cat]) + '</h3>' +
+      '<span class="count">共 ' + list.length + ' 条</span></div><div class="news-list">' +
+      (list.length ? list.map(function (a) { return rowHtml(a); }).join('') : '<div class="no-result">暂无内容</div>') +
+      '</div></div>';
+  }
+  function articleBody(a) {
+    var sib = byCat(a.cat), idx = sib.indexOf(a);
+    var prev = sib[idx + 1], next = sib[idx - 1];
+    return '<div class="sub-card">' +
+      '<div class="article-head"><h1>' + esc(a.title) + '</h1>' +
+      '<div class="article-meta"><span>发布时间：' + a.date + '</span><span>来源：昊宸工作室</span>' +
+      '<span>浏览：' + ((a._nid !== undefined ? a._nid : a.id) * 137 % 900 + 100) + ' 次</span></div></div>' +
+      '<div class="article-body">' + a.body.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('') + '</div>' +
+      '<div class="article-nav">' +
+        (prev ? '<a href="#/article/' + prev.id + '"><span>上一篇：</span>' + esc(prev.title) + '</a>' : '<a><span>上一篇：</span>没有了</a>') +
+        (next ? '<a href="#/article/' + next.id + '"><span>下一篇：</span>' + esc(next.title) + '</a>' : '<a><span>下一篇：</span>没有了</a>') +
+      '</div><a class="back-btn" href="#/list/' + a.cat + '">返回列表</a></div>';
+  }
+  function searchBody(kw) {
+    if (!kw) return '<div class="sub-card"><div class="no-result">请输入搜索关键词</div></div>';
+    var low = kw.toLowerCase();
+    var res = ARTICLES.filter(function (a) {
+      return (a.title + a.body.join('')).toLowerCase().indexOf(low) > -1;
+    });
+    var rows = res.map(function (a) {
+      var text = a.title + '　' + a.body.join('');
+      var pos = text.toLowerCase().indexOf(low);
+      var start = Math.max(0, pos - 30);
+      var snip = (start > 0 ? '…' : '') + text.slice(start, pos + kw.length + 60).trim() + '…';
+      return rowHtml(a, kw, snip);
+    });
+    return '<div class="sub-card"><div class="page-title-bar"><h3>搜索结果</h3>' +
+      '<span class="count">关键词“' + esc(kw) + '”，共 ' + res.length + ' 条</span></div><div class="news-list">' +
+      (rows.length ? rows.join('') : '<div class="no-result">未找到与“' + esc(kw) + '”相关的内容，换个关键词试试吧</div>') +
+      '</div></div>' +
+      '<div class="sub-card"><div class="page-title-bar"><h3>相关用户</h3></div>' +
+      '<div id="userResults"><div class="no-result">加载中…</div></div></div>';
+  }
+  function pageBody(pg) {
+    var html = '<div class="sub-card page-intro">' + pg.intro.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('') + '</div>';
+    if (pg.cat) {
+      var plist = byCat(pg.cat);
+      html += '<div class="sub-card"><div class="page-title-bar"><h3>相关动态</h3><span class="count">共 ' + plist.length + ' 条</span></div>' +
+        '<div class="news-list">' + plist.map(function (a) { return rowHtml(a); }).join('') + '</div></div>';
+    }
+    if (pg.contactInfo) {
+      html += '<div class="sub-card"><div class="svc-head"><h3>联系方式</h3></div>' + contactHtml() + '</div>';
+    }
+    return html;
+  }
+  function serviceBody(sv) {
+    return '<div class="sub-card"><div class="svc-head"><h3>' + esc(sv.title) + '</h3></div>' +
+      '<div class="svc-body">' + sv.desc.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('') +
+      (sv.contact ? contactHtml() : '') + '</div></div>';
+  }
+
+  // ===== 视图：论坛 / 用户中心 =====
+  function forumBody() {
+    var top = meUser
+      ? '<div class="sub-card"><div class="page-title-bar"><h3>发布新帖</h3></div>' +
+        '<div class="post-form">' +
+          '<input type="text" id="postTitle" maxlength="80" placeholder="请输入帖子标题（1-80 字）">' +
+          '<textarea id="postContent" rows="4" maxlength="2000" placeholder="请输入帖子内容（1-2000 字）"></textarea>' +
+          '<button class="hc-btn" id="postBtn">发布</button>' +
+          '<div class="hc-error" id="postFormError" hidden></div>' +
+        '</div></div>'
+      : '<div class="sub-card"><div class="no-result">请先登录后参与发帖与点赞<br>' +
+        '<a class="back-btn" href="login.html">去登录</a></div></div>';
+    return top +
+      '<div class="sub-card"><div class="page-title-bar"><h3>帖子列表</h3></div>' +
+      '<div id="postList"><div class="no-result">加载中…</div></div></div>';
+  }
+  function hcRepliesHtml(replies) {
+    return replies.map(function (r) {
+      var name = r.user_name || '用户';
+      return '<div class="hc-reply-item" data-id="' + r.id + '">' +
+        '<span class="hc-reply-avatar">' + esc(name.charAt(0).toUpperCase()) + '</span>' +
+        '<div class="hc-reply-main">' +
+          '<div class="hc-reply-head">' +
+            '<a class="hc-reply-name" href="#/user/' + r.user_id + '">' + esc(name) + '</a>' + hcBadge(r.verify_type) +
+            '<span class="hc-reply-time">' + fmtTime(r.created_at) + '</span>' +
+            (r.can_delete ? '<span class="hc-reply-del" data-id="' + r.id + '">删除</span>' : '') +
+          '</div>' +
+          '<div class="hc-reply-content">' + esc(r.content) + '</div>' +
+        '</div></div>';
+    }).join('');
+  }
+  function hcLoadReplies(pid) {
+    var list = document.getElementById('hcReplyList' + pid);
+    if (!list) return;
+    fetch('api.php?action=replies&post_id=' + encodeURIComponent(pid))
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        var list2 = document.getElementById('hcReplyList' + pid);
+        if (!list2) return;
+        if (d.error) { list2.innerHTML = '<div class="no-result">' + esc(d.error) + '</div>'; return; }
+        var replies = d.replies || [];
+        list2.innerHTML = replies.length
+          ? hcRepliesHtml(replies)
+          : '<div class="no-result" style="padding:14px 0">还没有回复，来抢沙发吧</div>';
+        var area = list2.closest('.hc-reply-area');
+        var btn = area && area.parentNode ? area.parentNode.querySelector('.hc-reply-btn') : null;
+        if (btn) {
+          btn.dataset.count = replies.length;
+          var c = btn.querySelector('.hc-reply-count');
+          if (c) c.textContent = replies.length;
+        }
+      })
+      .catch(function () {});
+  }
+  function postItemHtml(p) {
+    var rc = p.reply_count || 0;
+    var replyBox = meUser
+      ? '<div class="hc-reply-input-row">' +
+          '<input type="text" class="hc-reply-input" id="hcReplyInput' + p.id + '" maxlength="200" placeholder="写下你的回复（1-200 字）">' +
+          '<button class="hc-btn hc-reply-send" data-id="' + p.id + '">发送</button>' +
+        '</div>'
+      : '<a class="hc-reply-login" href="login.html">登录后可回复</a>';
+    return '<div class="post-item">' +
+      '<div class="post-title">' + esc(p.title) + '</div>' +
+      '<div class="post-content">' + esc(p.content) + '</div>' +
+      '<div class="post-meta">' +
+        '<a class="post-author" href="#/user/' + p.author_id + '">' + esc(p.author_name) + hcBadge(p.verify_type) + '</a>' +
+        '<span>' + fmtTime(p.created_at) + '</span>' +
+        '<span class="like-btn' + (p.liked ? ' liked' : '') + '" data-id="' + p.id + '">❤ <i>' + p.like_count + '</i></span>' +
+        '<span class="hc-reply-btn" data-id="' + p.id + '" data-count="' + rc + '">回复(<i class="hc-reply-count">' + rc + '</i>)</span>' +
+        (p.is_own ? '<span class="del-btn" data-id="' + p.id + '">删除</span>' : '') +
+      '</div>' +
+      '<div class="hc-reply-area" id="hcReplyArea' + p.id + '" hidden>' +
+        '<div class="hc-reply-list" id="hcReplyList' + p.id + '"></div>' +
+        replyBox +
+        '<div class="hc-reply-err" id="hcReplyErr' + p.id + '" hidden></div>' +
+      '</div>' +
+    '</div>';
+  }
+  function loadForum() {
+    var box = document.getElementById('postList');
+    if (!box) return;
+    fetch('api.php?action=posts').then(function (r) { return r.json(); }).then(function (d) {
+      var list = document.getElementById('postList');
+      if (!list) return;
+      var posts = d.posts || [];
+      list.innerHTML = posts.length
+        ? posts.map(postItemHtml).join('')
+        : '<div class="no-result">还没有帖子，来发第一帖吧</div>';
+    });
+    var btn = document.getElementById('postBtn');
+    if (btn) {
+      btn.addEventListener('click', function () {
+        var errEl = document.getElementById('postFormError');
+        function showPostError(msg) {
+          if (errEl) { errEl.textContent = msg; errEl.hidden = false; }
+        }
+        function clearPostError() {
+          if (errEl) { errEl.textContent = ''; errEl.hidden = true; }
+        }
+        clearPostError();
+        var title = document.getElementById('postTitle').value.trim();
+        var content = document.getElementById('postContent').value.trim();
+        if (!title) { showPostError('请输入帖子标题'); return; }
+        if (!content) { showPostError('请输入帖子内容'); return; }
+        fetch('api.php?action=post_create', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title: title, content: content })
+        }).then(function (r) {
+          return r.json().then(function (d) { return { status: r.status, d: d }; });
+        }).then(function (res) {
+          if (res.status !== 200 || !res.d.ok) { showPostError(res.d.error || '发布失败'); return; }
+          clearPostError();
+          document.getElementById('postTitle').value = '';
+          document.getElementById('postContent').value = '';
+          loadForum();
+        });
+      });
+    }
+    box.addEventListener('click', function (e) {
+      var t = e.target;
+      if (t.tagName === 'I') t = t.parentNode;
+      if (t.classList.contains('like-btn')) {
+        if (!meUser) { alert('请先登录'); return; }
+        fetch('api.php?action=post_like', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: +t.dataset.id })
+        }).then(function (r) { return r.json(); }).then(function (d) {
+          if (d.error) { alert(d.error); return; }
+          t.classList.toggle('liked', d.liked);
+          t.querySelector('i').textContent = d.like_count;
+        });
+      } else if (t.classList.contains('del-btn')) {
+        if (!confirm('确定删除这条帖子吗？')) return;
+        fetch('api.php?action=post_delete', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: +t.dataset.id })
+        }).then(function (r) {
+          return r.json().then(function (d) { return { status: r.status, d: d }; });
+        }).then(function (res) {
+          if (res.status !== 200) { alert(res.d.error || '删除失败'); return; }
+          loadForum();
+        });
+      } else if (t.classList.contains('hc-reply-btn')) {
+        var rpid = t.dataset.id;
+        var area = document.getElementById('hcReplyArea' + rpid);
+        if (!area) return;
+        if (area.hidden) {
+          area.hidden = false;
+          t.classList.add('on');
+          t.textContent = '收起';
+          hcLoadReplies(rpid);
+        } else {
+          area.hidden = true;
+          t.classList.remove('on');
+          var n = t.dataset.count !== undefined ? +t.dataset.count : 0;
+          t.innerHTML = '回复(<i class="hc-reply-count">' + n + '</i>)';
+        }
+      } else if (t.classList.contains('hc-reply-send')) {
+        var spid = t.dataset.id;
+        var sinp = document.getElementById('hcReplyInput' + spid);
+        var serr = document.getElementById('hcReplyErr' + spid);
+        if (serr) { serr.textContent = ''; serr.hidden = true; }
+        var rcontent = sinp ? sinp.value.trim() : '';
+        if (!rcontent) {
+          if (serr) { serr.textContent = '回复内容不能为空'; serr.hidden = false; }
+          return;
+        }
+        fetch('api.php?action=reply_create', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ post_id: +spid, content: rcontent })
+        }).then(function (r) {
+          return r.json().then(function (d) { return { status: r.status, d: d }; });
+        }).then(function (res) {
+          var errEl = document.getElementById('hcReplyErr' + spid);
+          if (res.status !== 200 || !res.d.ok) {
+            if (errEl) { errEl.textContent = res.d.error || '回复失败'; errEl.hidden = false; }
+            return;
+          }
+          var inpEl = document.getElementById('hcReplyInput' + spid);
+          if (inpEl) inpEl.value = '';
+          if (errEl) { errEl.textContent = ''; errEl.hidden = true; }
+          hcLoadReplies(spid);
+        });
+      } else if (t.classList.contains('hc-reply-del')) {
+        if (!confirm('确定删除这条回复吗？')) return;
+        var delWrap = t.closest('.hc-reply-area');
+        var dpid = delWrap ? delWrap.id.replace('hcReplyArea', '') : '';
+        fetch('api.php?action=reply_delete', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: +t.dataset.id })
+        }).then(function (r) {
+          return r.json().then(function (d) { return { status: r.status, d: d }; });
+        }).then(function (res) {
+          if (res.status !== 200 || !res.d.ok) { alert(res.d.error || '删除失败'); return; }
+          if (dpid) hcLoadReplies(dpid);
+        });
+      }
+    });
+  }
+  function loadUserPage(id) {
+    fetch('api.php?action=user&id=' + encodeURIComponent(id))
+      .then(function (r) { return r.json().then(function (d) { return { status: r.status, d: d }; }); })
+      .then(function (res) {
+        var box = document.getElementById('userPageBox');
+        if (!box) return;
+        if (res.status !== 200 || !res.d.user) { box.innerHTML = notFound(); return; }
+        var d = res.d, u = d.user;
+        var bio = u.bio || '这个人很懒，什么都没写';
+        var html = '<div class="sub-card"><div class="user-head">' +
+          '<img class="user-avatar" src="/tx.png" alt="头像">' +
+          '<div class="user-info">' +
+            '<div class="user-name">' + esc(u.name) + hcBadge(u.verify_type) +
+              (d.is_self ? ' <a class="hc-link" href="#/settings">编辑资料</a><span id="hcVerifyArea"></span>' : '') + '</div>' +
+            (u.verify_title ? '<div class="hc-vtitle">' + esc(u.verify_title) + '</div>' : '') +
+            '<div class="user-email">' + esc(u.email) + '</div>' +
+            '<div class="user-bio">' + esc(bio) + '</div>' +
+            '<div class="user-meta">注册时间：' + fmtTime(u.created_at) +
+              ' · 关注 ' + d.following + ' · 粉丝 ' + d.followers + '</div>' +
+          '</div>' +
+          (!d.is_self && meUser
+            ? '<span style="flex-shrink:0"><button class="hc-btn follow-btn' + (d.is_following ? ' on' : '') + '" data-id="' + u.id + '">' +
+              (d.is_following ? '已关注' : '关注') + '</button>' +
+              '<a class="hc-btn2" style="margin-left:10px" href="#/chat/' + u.id + '">私聊</a></span>'
+            : '') +
+        '</div></div>' +
+        '<div class="sub-card"><div class="page-title-bar"><h3>TA 的帖子</h3>' +
+          '<span class="count">共 ' + d.posts.length + ' 条</span></div>' +
+          (d.posts.length ? d.posts.map(function (p) {
+            return '<div class="post-item">' +
+              '<a class="post-title post-link" href="#/forum">' + esc(p.title) + '</a>' +
+              '<div class="post-meta"><span>' + fmtTime(p.created_at) + '</span>' +
+              '<span>❤ ' + p.like_count + '</span></div></div>';
+          }).join('') : '<div class="no-result">TA 还没有发布帖子</div>') +
+        '</div>';
+        box.innerHTML = html;
+        if (d.is_self) {
+          fetch('api.php?action=verify_status')
+            .then(function (r) { return r.ok ? r.json() : null; })
+            .then(function (vs) {
+              var area = document.getElementById('hcVerifyArea');
+              if (!area || !vs) return;
+              if (vs.status === 'pending') {
+                area.innerHTML = ' <span class="hc-link" style="color:#b3bdc9;cursor:default">审核中…</span>';
+              } else if (vs.status !== 'approved' && !u.verify_type) {
+                area.innerHTML = ' <a class="hc-link" id="hcVerifyBtn">申请认证</a>';
+                document.getElementById('hcVerifyBtn').addEventListener('click', hcOpenVerifyModal);
+              }
+            })
+            .catch(function () {});
+        }
+        var fb = box.querySelector('.follow-btn');
+        if (fb) {
+          fb.addEventListener('click', function () {
+            fetch('api.php?action=follow', {
+              method: 'POST', headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ user_id: +fb.dataset.id })
+            }).then(function (r) { return r.json(); }).then(function (dd) {
+              if (dd.error) { alert(dd.error); return; }
+              loadUserPage(fb.dataset.id);
+            });
+          });
+        }
+      });
+  }
+  function loadMyWorks() {
+    fetch('api.php?action=me').then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+      var box = document.getElementById('myworksBox');
+      if (!box) return;
+      if (!d || !d.user) { box.innerHTML = needLoginHtml(); return; }
+      fetch('api.php?action=user&id=' + d.user.id).then(function (r) { return r.json(); }).then(function (ud) {
+        var box2 = document.getElementById('myworksBox');
+        if (!box2 || !ud.user) return;
+        var posts = ud.posts || [];
+        box2.innerHTML = '<div class="sub-card"><div class="page-title-bar"><h3>我的作品</h3>' +
+          '<span class="count">共 ' + posts.length + ' 条</span></div><div id="myPostList">' +
+          (posts.length ? posts.map(function (p) {
+            return '<div class="post-item">' +
+              '<div class="post-title">' + esc(p.title) + '</div>' +
+              '<div class="post-content">' + esc(p.content) + '</div>' +
+              '<div class="post-meta"><span>' + fmtTime(p.created_at) + '</span>' +
+              '<span>❤ ' + p.like_count + '</span>' +
+              '<span class="del-btn" data-id="' + p.id + '">删除</span></div></div>';
+          }).join('') : '<div class="no-result">你还没有发布作品，快去论坛发帖吧</div>') +
+          '</div></div>';
+        var list = document.getElementById('myPostList');
+        if (list) {
+          list.addEventListener('click', function (e) {
+            var t = e.target;
+            if (!t.classList.contains('del-btn')) return;
+            if (!confirm('确定删除这条帖子吗？')) return;
+            fetch('api.php?action=post_delete', {
+              method: 'POST', headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ id: +t.dataset.id })
+            }).then(function (r) {
+              return r.json().then(function (dd) { return { status: r.status, d: dd }; });
+            }).then(function (res) {
+              if (res.status !== 200) { alert(res.d.error || '删除失败'); return; }
+              loadMyWorks();
+            });
+          });
+        }
+      });
+    });
+  }
+  function loadSettings() {
+    fetch('api.php?action=me').then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+      var box = document.getElementById('settingsBox');
+      if (!box) return;
+      if (!d || !d.user) { box.innerHTML = needLoginHtml(); return; }
+      fetch('api.php?action=user&id=' + d.user.id).then(function (r) { return r.json(); }).then(function (ud) {
+        var box2 = document.getElementById('settingsBox');
+        if (!box2 || !ud.user) return;
+        var bio = ud.user.bio || '';
+        box2.innerHTML = '<div class="sub-card"><div class="page-title-bar"><h3>编辑资料</h3></div>' +
+          '<div class="settings-form">' +
+            '<div class="form-row"><label>昵称</label>' +
+              '<input type="text" id="setName" maxlength="20" value="' + escq(ud.user.name) + '" placeholder="2-20 个字符"></div>' +
+            '<div class="form-row"><label>简介</label>' +
+              '<textarea id="setBio" rows="4" maxlength="200" placeholder="介绍一下自己吧（200 字以内）">' + esc(bio) + '</textarea>' +
+              '<div class="bio-count"><span id="bioCount">' + bio.length + '</span>/200</div></div>' +
+            '<div class="form-row"><button class="hc-btn" id="saveProfileBtn">保存</button></div>' +
+          '</div></div>';
+        var bioEl = document.getElementById('setBio');
+        bioEl.addEventListener('input', function () {
+          document.getElementById('bioCount').textContent = bioEl.value.length;
+        });
+        document.getElementById('saveProfileBtn').addEventListener('click', function () {
+          var name = document.getElementById('setName').value.trim();
+          fetch('api.php?action=profile', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: name, bio: bioEl.value.trim() })
+          }).then(function (r) {
+            return r.json().then(function (dd) { return { status: r.status, d: dd }; });
+          }).then(function (res) {
+            if (res.status !== 200 || !res.d.ok) { alert(res.d.error || '保存失败'); return; }
+            alert('保存成功');
+            renderAuth(res.d.user);
+            loadSettings();
+          });
+        });
+      });
+    });
+  }
+  function loadUserResults(kw) {
+    var box = document.getElementById('userResults');
+    if (!box) return;
+    fetch('api.php?action=users_search&q=' + encodeURIComponent(kw))
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        var box2 = document.getElementById('userResults');
+        if (!box2) return;
+        var users = d.users || [];
+        box2.innerHTML = users.length ? users.map(function (u) {
+          var bio = u.bio || '这个人很懒，什么都没写';
+          if (bio.length > 40) bio = bio.slice(0, 40) + '…';
+          return '<a class="user-result-item" href="#/user/' + u.id + '">' +
+            '<img class="ur-avatar" src="/tx.png" alt="">' +
+            '<div class="ur-info"><div class="ur-name">' + esc(u.name) + hcBadge(u.verify_type) + '</div>' +
+            '<div class="ur-bio">' + esc(bio) + '</div></div>' +
+            '<div class="ur-fans">粉丝 ' + u.followers + '</div></a>';
+        }).join('') : '<div class="no-result">未找到相关用户</div>';
+      })
+      .catch(function () {});
+  }
+
+  // ===== hc- 新增：申请认证弹窗 =====
+  function hcOpenVerifyModal() {
+    var mask = document.createElement('div');
+    mask.className = 'hc-modal-mask';
+    mask.innerHTML = '<div class="hc-dialog"><h3>申请认证</h3>' +
+      '<label>认证类型</label><select id="hcVType">' +
+        '<option value="blue">蓝V · 认证创作者</option>' +
+        '<option value="yellow">黄V · 优质创作者</option>' +
+        '<option value="white">白V · 官方认证</option>' +
+      '</select>' +
+      '<label>认证称号</label><input type="text" id="hcVTitle" maxlength="20" placeholder="如：科技领域创作者">' +
+      '<label>申请理由</label><textarea id="hcVReason" rows="4" maxlength="500" placeholder="请简述申请理由"></textarea>' +
+      '<div class="hc-dialog-btns"><button class="hc-btn2" id="hcVCancel">取消</button>' +
+      '<button class="hc-btn" id="hcVSubmit">提交申请</button></div></div>';
+    document.body.appendChild(mask);
+    document.getElementById('hcVCancel').addEventListener('click', function () { mask.remove(); });
+    mask.addEventListener('click', function (e) { if (e.target === mask) mask.remove(); });
+    document.getElementById('hcVSubmit').addEventListener('click', function () {
+      var type = document.getElementById('hcVType').value;
+      var title = document.getElementById('hcVTitle').value.trim();
+      var reason = document.getElementById('hcVReason').value.trim();
+      if (!title) { alert('请填写认证称号'); return; }
+      if (!reason) { alert('请填写申请理由'); return; }
+      fetch('api.php?action=verify_apply', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: type, title: title, reason: reason })
+      }).then(function (r) {
+        return r.json().then(function (d) { return { status: r.status, d: d }; });
+      }).then(function (res) {
+        if (res.status !== 200 || !res.d.ok) { alert(res.d.error || '提交失败'); return; }
+        alert('申请已提交，请耐心等待审核');
+        mask.remove();
+        router();
+      });
+    });
+  }
+
+  // ===== hc- 新增：会员中心 =====
+  function loadMember() {
+    var box = document.getElementById('memberBox');
+    if (!box) return;
+    fetch('api.php?action=me').then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+      var b = document.getElementById('memberBox');
+      if (!b) return;
+      if (!d || !d.user) { b.innerHTML = needLoginHtml(); return; }
+      fetch('api.php?action=member_center').then(function (r) { return r.json(); }).then(function (mc) {
+        var b2 = document.getElementById('memberBox');
+        if (!b2) return;
+        if (mc.error) { b2.innerHTML = '<div class="sub-card"><div class="no-result">' + esc(mc.error) + '</div></div>'; return; }
+        var st = mc.stats || {};
+        var ach = mc.achievements || [];
+        var got = ach.filter(function (a) { return a.awarded; }).length;
+        b2.innerHTML =
+          '<div class="sub-card"><div class="page-title-bar"><h3>会员中心</h3></div>' +
+            '<div class="hc-member-top">' +
+              '<div class="hc-coin-card"><div class="hc-coin-num">🪙 ' + (mc.coins || 0) + '</div>' +
+                '<div class="hc-coin-label">昊宸币余额</div></div>' +
+              '<div class="hc-verify-card"><h4>认证状态</h4>' +
+                (mc.verify_type
+                  ? '<span class="hc-verify-now">' + hcBadge(mc.verify_type) + ' ' + esc(mc.verify_title || '') + '</span>'
+                  : '<span class="hc-verify-now" style="color:#9aa7b8">未认证</span>') +
+              '</div></div>' +
+            '<div class="hc-stats">' +
+              '<div class="hc-stat"><b>' + (st.posts || 0) + '</b><span>发帖</span></div>' +
+              '<div class="hc-stat"><b>' + (st.likes_received || 0) + '</b><span>获赞</span></div>' +
+              '<div class="hc-stat"><b>' + (st.followers || 0) + '</b><span>粉丝</span></div>' +
+            '</div></div>' +
+          '<div class="sub-card"><div class="page-title-bar"><h3>成就墙</h3>' +
+            '<span class="count">已获得 ' + got + ' / ' + ach.length + '</span></div>' +
+            '<div class="hc-ach-grid">' +
+            (ach.length ? ach.map(function (a) {
+              return '<div class="hc-ach ' + (a.awarded ? 'hc-ach-got' : 'hc-ach-lock') + '">' +
+                '<div class="hc-ach-name">' + (a.awarded ? '🏅 ' : '🔒 ') + esc(a.name) + '</div>' +
+                '<div class="hc-ach-desc">' + esc(a.description) + '</div>' +
+                '<div class="hc-ach-coin">🪙 +' + (a.coins || 0) + '</div>' +
+                (a.awarded ? '<div class="hc-ach-date">' + (a.awarded_at ? fmtTime(a.awarded_at).slice(0, 10) : '') + ' 获得</div>' : '') +
+              '</div>';
+            }).join('') : '<div class="no-result">暂无成就</div>') +
+            '</div></div>';
+      });
+    });
+  }
+
+  // ===== hc- 新增：消息会话列表 =====
+  function loadConversations() {
+    var box = document.getElementById('messagesBox');
+    if (!box) return;
+    fetch('api.php?action=me').then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+      var b = document.getElementById('messagesBox');
+      if (!b) return;
+      if (!d || !d.user) { b.innerHTML = needLoginHtml(); return; }
+      fetch('api.php?action=conversations').then(function (r) { return r.json(); }).then(function (cd) {
+        var b2 = document.getElementById('messagesBox');
+        if (!b2) return;
+        var list = cd.conversations || [];
+        b2.innerHTML = '<div class="sub-card"><div class="page-title-bar"><h3>消息</h3>' +
+          '<span class="count">共 ' + list.length + ' 个会话</span></div>' +
+          (list.length ? list.map(function (c) {
+            var last = c.last_message || '';
+            if (last.length > 40) last = last.slice(0, 40) + '…';
+            return '<a class="hc-conv-item" href="#/chat/' + c.peer_id + '">' +
+              '<img class="ur-avatar" src="/tx.png" alt="">' +
+              '<div class="hc-conv-info"><div class="hc-conv-name">' + esc(c.peer_name) + hcBadge(c.verify_type) + '</div>' +
+              '<div class="hc-conv-last">' + esc(last) + '</div></div>' +
+              '<div class="hc-conv-time">' + (c.last_time ? fmtTime(c.last_time) : '') + '</div></a>';
+          }).join('') : '<div class="no-result">还没有会话，去找人聊聊吧</div>') +
+          '</div>';
+      });
+    });
+  }
+
+  // ===== hc- 新增：私聊页 =====
+  function loadChat(id) {
+    var box = document.getElementById('chatBox');
+    if (!box) return;
+    fetch('api.php?action=me').then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+      var b = document.getElementById('chatBox');
+      if (!b) return;
+      if (!d || !d.user) { b.innerHTML = needLoginHtml(); return; }
+      fetch('api.php?action=user&id=' + encodeURIComponent(id)).then(function (r) { return r.json(); }).then(function (ud) {
+        var b2 = document.getElementById('chatBox');
+        if (!b2) return;
+        if (!ud.user) { b2.innerHTML = notFound(); return; }
+        var peer = ud.user;
+        b2.innerHTML = '<div class="sub-card"><div class="page-title-bar">' +
+          '<h3>与 ' + esc(peer.name) + hcBadge(peer.verify_type) + ' 的对话</h3>' +
+          '<a class="back-btn" href="#/messages" style="margin-top:0">返回消息</a></div>' +
+          '<div class="hc-chat-msgs" id="hcChatMsgs"><div class="no-result">加载中…</div></div>' +
+          '<div class="hc-chat-input"><input type="text" id="hcChatInput" maxlength="500" placeholder="输入消息，回车发送">' +
+          '<button class="hc-btn" id="hcChatSend">发送</button></div></div>';
+        function refresh() {
+          fetch('api.php?action=chat&user_id=' + encodeURIComponent(id))
+            .then(function (r) { return r.json(); })
+            .then(function (cd) {
+              var m = document.getElementById('hcChatMsgs');
+              if (!m) return;
+              var msgs = cd.messages || [];
+              m.innerHTML = msgs.length ? msgs.map(function (msg) {
+                return '<div class="hc-msg-row ' + (msg.from_me ? 'hc-me' : 'hc-peer') + '"><div>' +
+                  '<div class="hc-msg">' + esc(msg.content) + '</div>' +
+                  '<div class="hc-msg-time"' + (msg.from_me ? ' style="text-align:right"' : '') + '>' + fmtTime(msg.created_at) + '</div>' +
+                  '</div></div>';
+              }).join('') : '<div class="no-result">还没有消息，打个招呼吧</div>';
+              m.scrollTop = m.scrollHeight;
+            });
+        }
+        refresh();
+        function send() {
+          var inp = document.getElementById('hcChatInput');
+          var content = inp.value.trim();
+          if (!content) { alert('不能发送空消息'); return; }
+          fetch('api.php?action=send_message', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ to_id: +id, content: content })
+          }).then(function (r) { return r.json(); }).then(function (sd) {
+            if (sd.error) { alert(sd.error); return; }
+            inp.value = '';
+            refresh();
+            hcFetchUnread();
+          });
+        }
+        document.getElementById('hcChatSend').addEventListener('click', send);
+        document.getElementById('hcChatInput').addEventListener('keydown', function (e) {
+          if (e.key === 'Enter') send();
+        });
+      });
+    });
+  }
+
+  // ===== hc- 新增：未读消息红点（unread_count 轮询 + mark_read） =====
+  var hcUnreadTimer = null;
+  function hcSetUnreadBadge(n) {
+    var badge = document.getElementById('hcUnreadBadge');
+    if (!badge) return;
+    n = +n || 0;
+    if (n > 0) {
+      badge.textContent = n > 99 ? '99+' : String(n);
+      badge.hidden = false;
+    } else {
+      badge.textContent = '';
+      badge.hidden = true;
+    }
+  }
+  function hcFetchUnread() {
+    if (!meUser) return;
+    fetch('api.php?action=unread_count')
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        if (d && typeof d.count !== 'undefined') hcSetUnreadBadge(d.count);
+      })
+      .catch(function () {});
+  }
+  function hcStartUnreadPoll() {
+    if (hcUnreadTimer) { clearInterval(hcUnreadTimer); hcUnreadTimer = null; }
+    if (location.protocol !== 'http:' && location.protocol !== 'https:') return;
+    hcFetchUnread();
+    hcUnreadTimer = setInterval(hcFetchUnread, 30000);
+  }
+  function hcStopUnreadPoll() {
+    if (hcUnreadTimer) { clearInterval(hcUnreadTimer); hcUnreadTimer = null; }
+    hcSetUnreadBadge(0);
+  }
+  function hcMarkRead() {
+    if (!meUser) return;
+    hcSetUnreadBadge(0);
+    fetch('api.php?action=mark_read', { method: 'POST' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) { if (d && d.ok) hcSetUnreadBadge(0); })
+      .catch(function () {});
+  }
+
+  // ===== hc- 新增：管理后台 =====
+  function loadAdmin(tab) {
+    var box = document.getElementById('adminBox');
+    if (!box) return;
+    fetch('api.php?action=me').then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+      var b = document.getElementById('adminBox');
+      if (!b) return;
+      if (!d || !d.user) { b.innerHTML = needLoginHtml(); return; }
+      if (!d.user.is_admin) {
+        b.innerHTML = '<div class="sub-card"><div class="no-result">无权限访问管理后台</div></div>';
+        return;
+      }
+      var tabs = [['ann', '公告管理'], ['verify', '认证申请'], ['users', '用户管理'], ['posts', '帖子管理'], ['news', '新闻管理']];
+      b.innerHTML = '<div class="sub-card"><div class="hc-tabs" id="hcAdminTabs">' +
+        tabs.map(function (t) {
+          return '<a data-t="' + t[0] + '"' + (t[0] === tab ? ' class="on"' : '') + '>' + t[1] + '</a>';
+        }).join('') +
+        '</div><div id="hcAdminBody" style="margin-top:16px"><div class="no-result">加载中…</div></div></div>';
+      document.getElementById('hcAdminTabs').addEventListener('click', function (e) {
+        var t = e.target;
+        if (t.tagName !== 'A') return;
+        loadAdmin(t.dataset.t);
+      });
+      hcAdminTab(tab);
+    });
+  }
+  function hcAdminTab(tab) {
+    var body = document.getElementById('hcAdminBody');
+    if (!body) return;
+    var tnames = { blue: '蓝V', yellow: '黄V', white: '白V' };
+    if (tab === 'ann') {
+      fetch('api.php?action=announcement').then(function (r) { return r.json(); }).then(function (d) {
+        if (!document.getElementById('hcAdminBody')) return;
+        body.innerHTML = '<textarea id="hcAnnText" rows="4" style="width:100%;border:1px solid #d4dfee;' +
+          'padding:10px 12px;font-size:14px;outline:none;resize:vertical;font-family:inherit" ' +
+          'placeholder="公告内容，留空则不显示公告栏">' + esc(d.content || '') + '</textarea>' +
+          '<div style="margin-top:12px"><button class="hc-btn" id="hcAnnSave">保存公告</button></div>';
+        document.getElementById('hcAnnSave').addEventListener('click', function () {
+          fetch('api.php?action=admin_announcement', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ content: document.getElementById('hcAnnText').value.trim() })
+          }).then(function (r) { return r.json(); }).then(function (dd) {
+            if (dd.error) { alert(dd.error); return; }
+            alert('公告已保存');
+            loadAnnouncement();
+          });
+        });
+      });
+    } else if (tab === 'verify') {
+      fetch('api.php?action=verify_requests').then(function (r) { return r.json(); }).then(function (d) {
+        if (!document.getElementById('hcAdminBody')) return;
+        var list = d.requests || [];
+        body.innerHTML = list.length ? '<table class="hc-table"><tr><th>申请人</th><th>类型</th><th>称号</th><th>理由</th><th>时间</th><th>状态/操作</th></tr>' +
+          list.map(function (q) {
+            return '<tr><td>' + esc(q.user_name) + '</td><td>' + (tnames[q.type] || esc(q.type)) + '</td>' +
+              '<td>' + esc(q.title) + '</td><td>' + esc(q.reason) + '</td><td>' + fmtTime(q.created_at) + '</td>' +
+              '<td>' + (q.status === 'pending'
+                ? '<span class="hc-link-btn" data-id="' + q.id + '" data-ok="1">通过</span> · ' +
+                  '<span class="hc-danger" data-id="' + q.id + '" data-ok="0">拒绝</span>'
+                : (q.status === 'approved' ? '<span style="color:#2e9e4f">已通过</span>' : '<span style="color:#9aa7b8">已拒绝</span>')) +
+              '</td></tr>';
+          }).join('') + '</table>' : '<div class="no-result">暂无认证申请</div>';
+        body.onclick = function (e) {
+          var t = e.target;
+          if (!t.dataset || !t.dataset.id) return;
+          fetch('api.php?action=verify_review', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: +t.dataset.id, approve: t.dataset.ok === '1' })
+          }).then(function (r) { return r.json(); }).then(function (dd) {
+            if (dd.error) { alert(dd.error); return; }
+            hcAdminTab('verify');
+          });
+        };
+      });
+    } else if (tab === 'users') {
+      fetch('api.php?action=admin_users').then(function (r) { return r.json(); }).then(function (d) {
+        if (!document.getElementById('hcAdminBody')) return;
+        var users = d.users || [];
+        body.innerHTML = users.length ? '<table class="hc-table"><tr><th>ID</th><th>名字</th><th>邮箱</th><th>昊宸币</th><th>粉丝</th><th>认证</th><th>状态</th><th>操作</th></tr>' +
+          users.map(function (u) {
+            var isAdm = u.is_admin ? 1 : 0;
+            var isRoot = String(u.email || '').toLowerCase() === 'haochen-gongzuoshi@qq.com';
+            return '<tr' + (u.banned ? ' class="hc-off"' : '') + '><td>' + u.id + '</td><td>' + esc(u.name) +
+              (isAdm ? ' <span class="hc-admin-tag">管理员</span>' : '') + '</td>' +
+              '<td>' + esc(u.email) + '</td><td>' + (u.coins || 0) + '</td><td>' + (u.followers || 0) + '</td>' +
+              '<td>' + (u.verify_type ? (tnames[u.verify_type] || u.verify_type) + ' ' + esc(u.verify_title || '') : '—') + '</td>' +
+              '<td>' + (u.banned ? '已封禁' : '正常') + '</td>' +
+              '<td><span class="hc-link-btn hc-edit-user" data-id="' + u.id + '">编辑</span>' +
+                (!isRoot ? ' · <span class="hc-link-btn hc-toggle-admin" data-id="' + u.id + '" data-adm="' + isAdm + '">' +
+                  (isAdm ? '取消管理员' : '设为管理员') + '</span>' : '') +
+              '</td></tr>' +
+              '<tr class="hc-edit-row" id="hcEditRow' + u.id + '" hidden><td colspan="8"><div class="hc-mini-form">' +
+                '<label>名字</label><input type="text" id="hcEU-name-' + u.id + '" value="' + escq(u.name) + '">' +
+                '<label>简介</label><input type="text" id="hcEU-bio-' + u.id + '" value="' + escq(u.bio || '') + '" style="width:170px">' +
+                '<label>昊宸币</label><input type="text" id="hcEU-coins-' + u.id + '" value="' + (u.coins || 0) + '" style="width:70px">' +
+                '<label>粉丝</label><input type="text" id="hcEU-fans-' + u.id + '" value="' + (u.followers || 0) + '" style="width:70px">' +
+                '<label>认证</label><select id="hcEU-vt-' + u.id + '">' +
+                  '<option value=""' + (u.verify_type ? '' : ' selected') + '>无</option>' +
+                  '<option value="blue"' + (u.verify_type === 'blue' ? ' selected' : '') + '>蓝V</option>' +
+                  '<option value="yellow"' + (u.verify_type === 'yellow' ? ' selected' : '') + '>黄V</option>' +
+                  '<option value="white"' + (u.verify_type === 'white' ? ' selected' : '') + '>白V</option>' +
+                '</select>' +
+                '<label>称号</label><input type="text" id="hcEU-vtitle-' + u.id + '" value="' + escq(u.verify_title || '') + '">' +
+                '<label>封禁</label><input type="checkbox" id="hcEU-banned-' + u.id + '"' + (u.banned ? ' checked' : '') + '>' +
+                ' <button class="hc-btn hc-btn-sm hc-save-user" data-id="' + u.id + '">保存</button>' +
+              '</div></td></tr>';
+          }).join('') + '</table>' : '<div class="no-result">暂无用户</div>';
+        body.onclick = function (e) {
+          var t = e.target;
+          if (t.classList.contains('hc-edit-user')) {
+            var row = document.getElementById('hcEditRow' + t.dataset.id);
+            if (row) row.hidden = !row.hidden;
+          } else if (t.classList.contains('hc-toggle-admin')) {
+            var uid = t.dataset.id;
+            fetch('api.php?action=admin_update_user', {
+              method: 'POST', headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ id: +uid, is_admin: t.dataset.adm === '1' ? 0 : 1 })
+            }).then(function (r) { return r.json(); }).then(function (dd) {
+              if (dd.error) { alert(dd.error); return; }
+              hcAdminTab('users');
+            });
+          } else if (t.classList.contains('hc-save-user')) {
+            var id = t.dataset.id;
+            fetch('api.php?action=admin_update_user', {
+              method: 'POST', headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                id: +id,
+                name: document.getElementById('hcEU-name-' + id).value.trim(),
+                bio: document.getElementById('hcEU-bio-' + id).value.trim(),
+                coins: +document.getElementById('hcEU-coins-' + id).value || 0,
+                followers: +document.getElementById('hcEU-fans-' + id).value || 0,
+                verify_type: document.getElementById('hcEU-vt-' + id).value,
+                verify_title: document.getElementById('hcEU-vtitle-' + id).value.trim(),
+                banned: document.getElementById('hcEU-banned-' + id).checked ? 1 : 0
+              })
+            }).then(function (r) { return r.json(); }).then(function (dd) {
+              if (dd.error) { alert(dd.error); return; }
+              alert('已保存');
+              hcAdminTab('users');
+            });
+          }
+        };
+      });
+    } else if (tab === 'posts') {
+      fetch('api.php?action=posts').then(function (r) { return r.json(); }).then(function (d) {
+        if (!document.getElementById('hcAdminBody')) return;
+        var posts = d.posts || [];
+        body.innerHTML = posts.length ? posts.map(function (p) {
+          return '<div class="post-item"><div class="post-title">' + esc(p.title) + '</div>' +
+            '<div class="post-meta"><span>' + esc(p.author_name) + '</span>' +
+            '<span>' + fmtTime(p.created_at) + '</span><span>❤ ' + p.like_count + '</span>' +
+            '<span class="del-btn" data-id="' + p.id + '">删除</span></div></div>';
+        }).join('') : '<div class="no-result">暂无帖子</div>';
+        body.onclick = function (e) {
+          var t = e.target;
+          if (!t.classList.contains('del-btn')) return;
+          if (!confirm('确定删除这条帖子吗？')) return;
+          fetch('api.php?action=post_delete', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: +t.dataset.id })
+          }).then(function (r) { return r.json(); }).then(function (dd) {
+            if (dd.error) { alert(dd.error); return; }
+            hcAdminTab('posts');
+          });
+        };
+      });
+    } else if (tab === 'news') {
+      var rows = ARTICLES.map(function (a) {
+        var sid = String(a.id);
+        var off = hcIsHidden(a);
+        var isCustom = sid.charAt(0) === 'c';
+        return '<tr' + (off ? ' class="hc-off"' : '') + '><td>' + esc(sid) + '</td><td>' + esc(a.title) + '</td>' +
+          '<td>' + (CATS[a.cat] || esc(a.cat)) + '</td><td>' + esc(a.date) + '</td>' +
+          '<td>' + (off ? '已下架 ' : '') +
+          '<span class="hc-link-btn hc-news-toggle" data-id="' + esc(sid) + '" data-hide="' + (off ? '0' : '1') + '">' +
+            (off ? '上架' : '下架') + '</span>' +
+          (isCustom ? ' · <span class="hc-danger hc-news-del" data-id="' + esc(sid) + '">删除</span>' : '') +
+          '</td></tr>';
+      }).join('');
+      var now = new Date();
+      function pd(n) { return n < 10 ? '0' + n : '' + n; }
+      var today = now.getFullYear() + '-' + pd(now.getMonth() + 1) + '-' + pd(now.getDate());
+      body.innerHTML = '<table class="hc-table"><tr><th>ID</th><th>标题</th><th>栏目</th><th>日期</th><th>操作</th></tr>' +
+        (rows || '<tr><td colspan="5">暂无新闻</td></tr>') + '</table>' +
+        '<div style="margin-top:22px;border-top:1px dashed #e8edf4;padding-top:16px">' +
+          '<h4 style="font-size:15px;color:#222">发布新闻</h4>' +
+          '<div class="hc-mini-form" style="margin-top:10px">' +
+            '<label>栏目</label><select id="hcNewsCat">' +
+              '<option value="industry">行业资讯</option><option value="pic">图片新闻</option><option value="rules">制度规则</option>' +
+            '</select>' +
+            '<label>日期</label><input type="text" id="hcNewsDate" value="' + today + '" style="width:110px">' +
+            '<div style="margin-top:8px"><input type="text" id="hcNewsTitle" placeholder="新闻标题" style="width:100%"></div>' +
+            '<div style="margin-top:8px"><textarea id="hcNewsBody" rows="5" placeholder="新闻正文（每段一行）" ' +
+              'style="width:100%;border:1px solid #d4dfee;padding:8px 10px;font-size:13px;font-family:inherit;resize:vertical"></textarea></div>' +
+            '<div style="margin-top:10px"><button class="hc-btn" id="hcNewsAdd">发布</button></div>' +
+          '</div></div>';
+      body.onclick = function (e) {
+        var t = e.target;
+        if (t.classList.contains('hc-news-toggle')) {
+          var sid = t.dataset.id;
+          var hide = t.dataset.hide === '1';
+          var nid = sid.charAt(0) === 'c' ? +sid.slice(1) : +sid;
+          fetch('api.php?action=admin_news_hide', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: nid, hidden: hide ? 1 : 0 })
+          }).then(function (r) { return r.json(); }).then(function (dd) {
+            if (dd.error) { alert(dd.error); return; }
+            var i = hiddenNews.indexOf(sid);
+            if (hide && i === -1) hiddenNews.push(sid);
+            if (!hide && i !== -1) hiddenNews.splice(i, 1);
+            renderNews('industry');
+            hcAdminTab('news');
+          });
+        } else if (t.classList.contains('hc-news-del')) {
+          if (!confirm('确定删除这条新闻吗？')) return;
+          var sid2 = t.dataset.id;
+          fetch('api.php?action=admin_news_del', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: +sid2.slice(1) })
+          }).then(function (r) { return r.json(); }).then(function (dd) {
+            if (dd.error) { alert(dd.error); return; }
+            for (var i = 0; i < ARTICLES.length; i++) {
+              if (String(ARTICLES[i].id) === sid2) { ARTICLES.splice(i, 1); break; }
+            }
+            renderNews('industry');
+            hcAdminTab('news');
+          });
+        } else if (t.id === 'hcNewsAdd') {
+          var cat = document.getElementById('hcNewsCat').value;
+          var title = document.getElementById('hcNewsTitle').value.trim();
+          var nbody = document.getElementById('hcNewsBody').value.trim();
+          var date = document.getElementById('hcNewsDate').value.trim();
+          if (!title || !nbody || !date) { alert('请填写完整的栏目、标题、正文和日期'); return; }
+          fetch('api.php?action=admin_news_add', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ cat: cat, title: title, body: nbody, date: date })
+          }).then(function (r) { return r.json(); }).then(function (dd) {
+            if (dd.error) { alert(dd.error); return; }
+            alert('发布成功');
+            fetch('api.php?action=news_state').then(function (r2) { return r2.ok ? r2.json() : null; }).then(function (ns) {
+              if (ns) applyNewsState(ns);
+              renderNews('industry');
+              hcAdminTab('news');
+            });
+          });
+        }
+      };
+    }
+  }
+
+  function afterRender(seg, sub) {
+    if (seg === 'forum') loadForum();
+    else if (seg === 'user') loadUserPage(sub);
+    else if (seg === 'myworks') loadMyWorks();
+    else if (seg === 'settings') loadSettings();
+    else if (seg === 'search') loadUserResults(sub);
+    else if (seg === 'member') loadMember();
+    else if (seg === 'messages') { loadConversations(); hcMarkRead(); }
+    else if (seg === 'chat') { loadChat(sub); hcMarkRead(); }
+    else if (seg === 'admin') loadAdmin('ann');
+  }
+
+  // ===== 路由 =====
+  var homeEl = document.getElementById('page-home');
+  var subEl = document.getElementById('page-sub');
+  var navLis = document.querySelectorAll('#navList > li');
+
+  function router() {
+    var parts = location.hash.replace(/^#/, '').split('/').filter(Boolean).map(decodeURIComponent);
+    var seg = parts[0] || 'home';
+    var sub = parts[1] || '';
+    var isHome = seg === 'home' || seg === '';
+    var title = '昊宸工作室官方网站-首页';
+    var banner = '', body = '', crumb = [{ name: '首页', href: '#/home' }], navIdx = -1;
+
+    if (isHome) {
+      navIdx = 0;
+    } else if (seg === 'list' && CATS[sub]) {
+      title = CATS[sub] + ' - 昊宸工作室官方网站';
+      banner = CATS[sub];
+      navIdx = sub === 'industry' ? 2 : -1;
+      crumb.push({ name: CATS[sub] });
+      body = listBody(sub);
+    } else if (seg === 'article') {
+      var a = null;
+      for (var i = 0; i < ARTICLES.length; i++) if (String(ARTICLES[i].id) === String(sub)) a = ARTICLES[i];
+      if (!a) {
+        title = '页面不存在 - 昊宸工作室官方网站'; banner = '提示'; crumb.push({ name: '提示' }); body = notFound();
+      } else {
+        title = a.title + ' - 昊宸工作室官方网站';
+        banner = CATS[a.cat]; navIdx = navByCat(a.cat);
+        crumb.push({ name: CATS[a.cat], href: '#/list/' + a.cat }, { name: a.title });
+        body = articleBody(a);
+      }
+    } else if (seg === 'search') {
+      var kw = sub.trim();
+      title = '搜索：' + kw + ' - 昊宸工作室官方网站';
+      banner = '搜索结果'; crumb.push({ name: '搜索结果' });
+      body = searchBody(kw);
+    } else if (seg === 'page' && PAGES[sub]) {
+      var pg = PAGES[sub];
+      title = pg.title + ' - 昊宸工作室官方网站';
+      banner = pg.title;
+      navIdx = { about: 1, rules: 3 }[sub] || -1;
+      crumb.push({ name: pg.title });
+      body = pageBody(pg);
+    } else if (seg === 'service' && SERVICES[sub]) {
+      var sv = SERVICES[sub];
+      title = sv.title + ' - 昊宸工作室官方网站';
+      banner = '服务平台'; crumb.push({ name: sv.title });
+      body = serviceBody(sv);
+    } else if (seg === 'forum') {
+      title = '交流论坛 - 昊宸工作室官方网站';
+      banner = '交流论坛'; navIdx = 4;
+      crumb.push({ name: '交流论坛' });
+      body = forumBody();
+    } else if (seg === 'user') {
+      title = '个人主页 - 昊宸工作室官方网站';
+      banner = '个人主页'; crumb.push({ name: '个人主页' });
+      body = '<div id="userPageBox"><div class="no-result">加载中…</div></div>';
+    } else if (seg === 'myworks') {
+      title = '我的作品 - 昊宸工作室官方网站';
+      banner = '我的作品'; crumb.push({ name: '我的作品' });
+      body = '<div id="myworksBox"><div class="no-result">加载中…</div></div>';
+    } else if (seg === 'settings') {
+      title = '编辑资料 - 昊宸工作室官方网站';
+      banner = '编辑资料'; crumb.push({ name: '编辑资料' });
+      body = '<div id="settingsBox"><div class="no-result">加载中…</div></div>';
+    } else if (seg === 'member') {
+      title = '会员中心 - 昊宸工作室官方网站';
+      banner = '会员中心'; crumb.push({ name: '会员中心' });
+      body = '<div id="memberBox"><div class="no-result">加载中…</div></div>';
+    } else if (seg === 'messages') {
+      title = '消息 - 昊宸工作室官方网站';
+      banner = '消息'; navIdx = 5; crumb.push({ name: '消息' });
+      body = '<div id="messagesBox"><div class="no-result">加载中…</div></div>';
+    } else if (seg === 'chat') {
+      title = '私聊 - 昊宸工作室官方网站';
+      banner = '私聊'; navIdx = 5; crumb.push({ name: '消息', href: '#/messages' }, { name: '私聊' });
+      body = '<div id="chatBox"><div class="no-result">加载中…</div></div>';
+    } else if (seg === 'admin') {
+      title = '管理后台 - 昊宸工作室官方网站';
+      banner = '管理后台'; crumb.push({ name: '管理后台' });
+      body = '<div id="adminBox"><div class="no-result">加载中…</div></div>';
+    } else {
+      title = '页面不存在 - 昊宸工作室官方网站';
+      banner = '提示'; crumb.push({ name: '提示' });
+      body = notFound();
+    }
+
+    homeEl.hidden = !isHome;
+    subEl.hidden = isHome;
+    if (!isHome) {
+      document.getElementById('sub-banner-title').textContent = banner;
+      document.getElementById('sub-crumb').innerHTML = crumbHtml(crumb);
+      document.getElementById('sub-view').innerHTML = body;
+      afterRender(seg, sub);
+    }
+    document.title = title;
+    navLis.forEach(function (li, i) { li.classList.toggle('on', i === navIdx); });
+    loadAnnouncement();
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener('hashchange', router);
+  router();
+
+  // ===== 首页新闻列表 =====
+  var listEl = document.getElementById('newsList');
+
+  function renderNews(key) {
+    listEl.innerHTML = byCat(key).slice(0, 5).map(function (a) { return rowHtml(a); }).join('');
+  }
+  renderNews('industry');
+
+  // ===== 搜索 =====
+  function doSearch() {
+    var kw = document.getElementById('searchInput').value.trim();
+    if (!kw) { alert('请输入搜索关键词以搜索内容🔍'); return; }
+    location.hash = '#/search/' + encodeURIComponent(kw);
+  }
+  document.getElementById('searchBtn').addEventListener('click', doSearch);
+  document.getElementById('searchInput').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') doSearch();
+  });
+
+  // ===== 登录状态 =====
+  var meUser = null;
+  function renderAuth(user) {
+    var el = document.getElementById('authArea');
+    if (!el) return;
+    meUser = user || null;
+    if (user) {
+      el.innerHTML = '<div class="auth-avatar-wrap">' +
+        '<img class="auth-avatar" id="authAvatar" src="/tx.png" alt="头像">' +
+        '<span class="auth-avatar-name" id="authAvatarName">' + esc(user.name) + '</span>' +
+        '<div class="avatar-menu" id="avatarMenu" hidden>' +
+          '<a href="#/member">会员中心</a>' +
+          '<a href="#/messages">消息</a>' +
+          (user.is_admin ? '<a href="#/admin">管理后台</a>' : '') +
+          '<a href="#/myworks">我的作品</a>' +
+          '<a href="#/settings">编辑资料</a>' +
+          '<a href="#/user/' + user.id + '">个人主页</a>' +
+          '<a id="joinUsBtn">加入我们</a>' +
+          '<a id="logoutBtn">退出</a>' +
+        '</div></div>';
+      var menu = document.getElementById('avatarMenu');
+      var toggle = function (e) { e.stopPropagation(); menu.hidden = !menu.hidden; };
+      document.getElementById('authAvatar').addEventListener('click', toggle);
+      document.getElementById('authAvatarName').addEventListener('click', toggle);
+      document.getElementById('joinUsBtn').addEventListener('click', function () {
+        alert('请使用邮箱向 haochen-gongzuoshi@qq.com 发送加入邮件');
+      });
+      document.getElementById('logoutBtn').addEventListener('click', function () {
+        fetch('api.php?action=logout', { method: 'POST' }).finally(function () { renderAuth(null); router(); });
+      });
+      hcStartUnreadPoll();
+    } else {
+      hcStopUnreadPoll();
+      el.innerHTML = '<a class="auth-btn" href="login.html">登录</a>' +
+        '<a class="auth-btn primary" href="register.html">注册</a>';
+    }
+  }
+  document.addEventListener('click', function () {
+    var menu = document.getElementById('avatarMenu');
+    if (menu && !menu.hidden) menu.hidden = true;
+  });
+  if (location.protocol === 'http:' || location.protocol === 'https:') {
+    fetch('api.php?action=me')
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) { renderAuth(d && d.user ? d.user : null); router(); })
+      .catch(function () { renderAuth(null); });
+    // hc- 新增：启动时拉取新闻状态（下架 + 自定义），失败则静默只用本地 ARTICLES
+    fetch('api.php?action=news_state')
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        if (!d) return;
+        applyNewsState(d);
+        renderNews('industry');
+        router();
+      })
+      .catch(function () {});
+  } else {
+    renderAuth(null);
+  }
+</script>
+</body>
+</html>
